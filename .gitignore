@@ -1,0 +1,29 @@
+# Dependencies
+node_modules
+.pnp
+.pnp.js
+
+# Production build
+dist
+build
+
+# Local environment & secrets
+.env
+.env.local
+.env.*.local
+*service_account*.json
+*firebase-adminsdk*.json
+
+# Logs & temp
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+
+# Cortex report isolation (per CORE_INTELLIGENCE standard: local reports not tracked in public git)
+cortex/reports/
+cortex/archive/
+scratch/
+temp/
+paani-pop-mvp.zip
