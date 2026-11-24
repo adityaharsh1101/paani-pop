@@ -55,7 +55,28 @@ export default function App(){
       <section className="section moments" id="venues"><div className="section-kicker">04 / WHERE WE SHOW UP</div><h2>Made for the<br/><em>in-between moments.</em></h2><div className="moment-grid">{[{tag:'01 / CELEBRATIONS',symbol:'✳',title:<>Weddings<br/>& gatherings</>,body:'A thoughtful welcome for the people who came to celebrate.',cls:'moment-wedding'},{tag:'02 / CAMPUS LIFE',symbol:'↗',title:<>Campuses<br/>& communities</>,body:'Connect with the next generation where life actually happens.',cls:'moment-campus'},{tag:'03 / AT WORK',symbol:'⌂',title:<>Offices<br/>& workplaces</>,body:'Bring a refreshingly simple perk to the working day.',cls:'moment-work'},{tag:'04 / OUT & ABOUT',symbol:'◎',title:<>Sports<br/>& events</>,body:'Keep people refreshed while the good stuff unfolds.',cls:'moment-sport'}].map((m,i)=><article className={'moment-card '+m.cls} key={i}><div className="moment-index">{m.tag}</div><div className="moment-symbol">{m.symbol}</div><h3>{m.title}</h3><p>{m.body}</p></article>)}</div></section>
       <section className="manifesto" id="about"><div className="manifesto-mark"><Droplets size={26}/></div><div className="section-kicker">05 / THE PAANI POP PROMISE</div><h2>Not another ad.<br/><em>A better way to show up.</em></h2><p>Less interruption. More usefulness. A little more joy in the everyday.</p><button className="btn btn-cream btn-lg" onClick={()=>setModal(true)}>Let's make something happen <ArrowUpRight/></button><div className="manifesto-foot">PAANI POP · FREE WATER. FULL ENTERTAINMENT.</div></section>
     </main>
-    <footer className="site-footer"><a className="wordmark" href="#top"><span className="logo-drop"><Droplets size={18}/></span>PAANI<span>POP</span></a><p>Good water. Better moments.</p><div><button onClick={()=>go('brand')}>Brand portal</button><button onClick={()=>go('ops')}>Operations</button><a href="mailto:hello@paanipop.in">Contact</a></div><small>© 2026 PAANI POP. Built around better moments.</small></footer>
+    <footer className="site-footer">
+      <div className="site-footer-top">
+        <a className="wordmark" href="#top"><span className="logo-drop"><Droplets size={18}/></span>PAANI<span>POP</span></a>
+        <p>Free water. Full entertainment.</p>
+        <div className="site-footer-links">
+          <button onClick={()=>go('brand')}>Brand portal</button>
+          <button onClick={()=>go('ops')}>Operations</button>
+          <a href="mailto:hello@paanipop.in">Contact</a>
+        </div>
+      </div>
+      <div className="site-footer-legal">
+        <div className="site-footer-copyright">
+          © 2026 HASHLILLY (OPC) PRIVATE LIMITED. Deskai, LillyPost, Soulamore, Terraclaw, That's Missing, and BoozedIN are trademarks of HASHLILLY (OPC) PRIVATE LIMITED.
+        </div>
+        <div className="site-footer-entity">
+          HASHLILLY (OPC) PRIVATE LIMITED | CIN: U62099PB2026OPC068567 | Reg No: UDYAM-PB-20-0003915 <br />
+          Registered Address: 399, MANNAT ENCLAVE -2, BHABAT SUB TEHSIL, Zirakpur, Rajpura, Mohali- 140603, Punjab <br />
+          Grievance Officer: tech.hashlilly@gmail.com <br />
+          Advertising automation platforms, software engineering, and experimental laboratory systems.
+        </div>
+      </div>
+    </footer>
     {modal&&<ContactModal close={()=>setModal(false)} notify={notify}/>}{toast&&<Toast message={toast}/>}
   </div>;
 
