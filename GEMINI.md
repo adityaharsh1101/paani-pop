@@ -72,3 +72,22 @@ All endpoints, token generators, auth routes, parsers, and state transitions mus
 - **Project Starters**: When initializing a new project, follow `CORE_INTELLIGENCE/Architecture_and_Standards/STANDARDS/PROJECT_INIT_V1_0.md`.
 - **Cortex Autonomous QA Lifecycle**: Stored in `cortex/testing/` (bugs) and `cortex/features/` (features). Zero-prompt self-tracking for bugs and defects.
 - **Git Report Isolation**: Reports in `cortex/reports/`, `cortex/archive/`, `archive/`, and `scratch/` are local-only and MUST NEVER be staged (`git add`) or committed to Git.
+
+---
+
+## 💸 6. Cloud & Firebase Cost Optimization Mandate (`zero-waste-cloud`)
+
+All agents, architectures, and deployments must strictly uphold these cost-control bounds:
+1. **Firebase Project Quota Ceiling ($\le$ 4 Projects)**:
+   - NEVER create a standalone Firebase/GCP project without explicit user confirmation.
+   - Use **Firebase Multi-Site Hosting** (`firebase hosting:sites:create`) under existing umbrella projects (e.g. `gen-lang-client-0758786889` / `Hashlilly Ecosystem`).
+   - The global ceiling is **36 hosting sites per Firebase project** and **10 GB shared storage**. If a project approaches 30+ sites, WARN the user before creating additional sites.
+2. **Cloud Scheduler Job Throttling**:
+   - Google grants **3 free Cloud Scheduler jobs per billing account**.
+   - Additional jobs cost monthly baseline fees PLUS wakeup compute.
+   - Never set cron frequencies higher than once daily (`0 0 * * *`) for background audits, surveillance jobs, or key synchronization unless explicitly requested.
+   - If a cron job or background automation is requested, verify the count against the 3-job free tier threshold and warn the user.
+3. **Cloud Run & 2nd Gen Functions Hygiene**:
+   - Enforce `min-instances: 0` for all serverless Cloud Run and Function deployments to eliminate idle 24/7 compute billing.
+   - Artifact Registry / Container Images: Delete superseded or deprecated Cloud Run services immediately to prevent perpetual Docker container retention fees.
+
