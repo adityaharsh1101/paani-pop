@@ -42,4 +42,4 @@ jobs:
         env:
           HAVE_SA: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_PAANI_POP != '' }}
         run: |
-          npx firebase-tools deploy --only hosting --non-interactive
+          npx firebase-tools deploy --only hosting:paani-pop --project gen-lang-client-0758786889 --non-interactive
