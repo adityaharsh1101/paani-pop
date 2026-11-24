@@ -67,7 +67,7 @@ export default function App(){
       </div>
       <div className="site-footer-legal">
         <div className="site-footer-copyright">
-          © 2026 HASHLILLY (OPC) PRIVATE LIMITED. Deskai, LillyPost, Soulamore, Terraclaw, That's Missing, and BoozedIN are trademarks of HASHLILLY (OPC) PRIVATE LIMITED.
+          © 2026 HASHLILLY (OPC) PRIVATE LIMITED. Deskai, LillyPost, Soulamore, Terraclaw, That's Missing, BoozedIN, SyncNode, Telegram Drive, God's Eye, Rojgaar, Wardrobe, Metro Connect, and PAANI POP are trademarks of HASHLILLY (OPC) PRIVATE LIMITED.
         </div>
         <div className="site-footer-entity">
           HASHLILLY (OPC) PRIVATE LIMITED | CIN: U62099PB2026OPC068567 | Reg No: UDYAM-PB-20-0003915 <br />
