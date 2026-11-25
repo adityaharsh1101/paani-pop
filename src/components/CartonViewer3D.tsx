@@ -25,14 +25,16 @@ interface InteractiveCarton3DProps {
   autoSpin?: boolean;
   hideControls?: boolean;
   stageHeight?: number;
+  translateYOffset?: number;
 }
 
 export function InteractiveCarton3D({
   carton,
-  scale = 0.50,
+  scale = 0.44,
   autoSpin = true,
   hideControls = false,
-  stageHeight = 490
+  stageHeight = 440,
+  translateYOffset = 30
 }: InteractiveCarton3DProps) {
   const [view, setView] = useState<'spin' | 'front' | 'sideA' | 'back' | 'sideB'>(
     autoSpin ? 'spin' : 'front'
@@ -44,9 +46,11 @@ export function InteractiveCarton3D({
   // Official dimensions from original dieline
   // Panel width = 300px, Panel height = 760px
   // Distance from center to faces = 150px
-  // Roof slanted height = 186px, slope angle = 53.7deg
-  // Gable height = 110px
-  // Fin height = 24px
+  // Slanted gable: base = 150px, gable peak height = 110px => slant length L = sqrt(150^2 + 110^2) = 186px
+  // Inward slant angle from vertical = atan(150 / 110) = 53.74 deg
+  // In CSS 3D: Front face is at translateZ(150px) translateY(-380px).
+  // Slanted roof face hinges at top edge: transformOrigin: '50% 100%'
+  // When rotated inward, rotateX(-53.7deg) pitches the top edge inward toward Z=0.
   const W = 300;
   const H = 760;
   const halfW = 150;
@@ -149,7 +153,7 @@ export function InteractiveCarton3D({
         <div
           style={{
             transformStyle: 'preserve-3d',
-            transform: `translateY(110px) scale(${scale})`
+            transform: `translateY(${translateYOffset}px) scale(${scale})`
           }}
         >
           {/* Carton 3D Container */}

@@ -100,18 +100,9 @@ export default function App() {
               <a href="#editions" onClick={() => setMobileMenuOpen(false)}>THE VIBES</a>
               <a href="#how" onClick={() => setMobileMenuOpen(false)}>HOW IT WORKS</a>
               <a href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
-              <a
-                href="/cartons/carton-template.html"
-                target="_blank"
-                rel="noreferrer"
-                className="btn lime"
-                style={{ padding: '8px 12px', fontSize: '11px', textDecoration: 'none' }}
-              >
-                ✦ TEMPLATE GENERATOR ↗
-              </a>
               <button
                 className="btn lime"
-                style={{ padding: '9px 15px', fontSize: '11px' }}
+                style={{ padding: '10px 18px', fontSize: '12px' }}
                 onClick={() => { setActiveTab('portal'); setMobileMenuOpen(false); }}
               >
                 ⚡ DASHBOARD PLAYGROUND
@@ -213,15 +204,15 @@ export default function App() {
                     display: 'flex',
                     alignItems: 'flex-end',
                     justifyContent: 'center',
-                    gap: '12px',
+                    gap: '16px',
                     width: '100%',
-                    marginTop: '32px'
+                    marginTop: '20px'
                   }}
                 >
-                  {/* Left Side Carton: InfluenceOS / ResumeEngine */}
+                  {/* Left Side Carton: InfluenceOS */}
                   <div
                     style={{
-                      flex: '0 1 180px',
+                      flex: '0 1 200px',
                       cursor: 'pointer',
                       display: 'flex',
                       flexDirection: 'column',
@@ -232,7 +223,7 @@ export default function App() {
                     onClick={() => setActiveHeroCarton(SPONSOR_CARTONS[2] || SPONSOR_CARTONS[1])}
                     title="Click to feature in center"
                   >
-                    <div style={{ textAlign: 'center', marginBottom: '6px', font: "700 10px 'JetBrains Mono', monospace", background: 'var(--blue)', color: '#fff', padding: '3px 10px', borderRadius: '99px', border: '1.5px solid var(--ink)', boxShadow: '2px 2px 0 var(--ink)' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '8px', font: "700 10px 'JetBrains Mono', monospace", background: 'var(--blue)', color: '#fff', padding: '4px 12px', borderRadius: '99px', border: '1.5px solid var(--ink)', boxShadow: '2px 2px 0 var(--ink)' }}>
                       {(SPONSOR_CARTONS[2] || SPONSOR_CARTONS[1]).name.toUpperCase()}
                     </div>
                     <div style={{ width: '100%', pointerEvents: 'none' }}>
@@ -242,6 +233,7 @@ export default function App() {
                         autoSpin={true}
                         hideControls={true}
                         stageHeight={350}
+                        translateYOffset={20}
                       />
                     </div>
                   </div>
@@ -255,24 +247,25 @@ export default function App() {
                       filter: 'drop-shadow(10px 14px 0 rgba(23,23,23,0.18))'
                     }}
                   >
-                    <div style={{ textAlign: 'center', marginBottom: '14px', position: 'relative', zIndex: 10 }}>
+                    <div style={{ textAlign: 'center', marginBottom: '18px', position: 'relative', zIndex: 10 }}>
                       <span style={{ font: "800 11px 'DM Mono', monospace", background: 'var(--lime)', border: '1.5px solid var(--ink)', color: 'var(--ink)', padding: '6px 14px', borderRadius: '99px', boxShadow: '2px 2px 0 var(--ink)', display: 'inline-block', whiteSpace: 'nowrap' }}>
                         ✦ {activeHeroCarton.id === 'custom-empty' ? 'THIS COULD BE YOURS! (CUSTOM SPONSOR SPOT)' : `${activeHeroCarton.name.toUpperCase()} · OFFICIAL DROP`}
                       </span>
                     </div>
                     <InteractiveCarton3D
                       carton={activeHeroCarton}
-                      scale={0.46}
+                      scale={0.42}
                       autoSpin={false}
                       hideControls={false}
-                      stageHeight={470}
+                      stageHeight={450}
+                      translateYOffset={25}
                     />
                   </div>
 
-                  {/* Right Side Carton: Hashlilly / Soulamore */}
+                  {/* Right Side Carton: Hashlilly */}
                   <div
                     style={{
-                      flex: '0 1 180px',
+                      flex: '0 1 200px',
                       cursor: 'pointer',
                       display: 'flex',
                       flexDirection: 'column',
@@ -283,7 +276,7 @@ export default function App() {
                     onClick={() => setActiveHeroCarton(SPONSOR_CARTONS[6] || SPONSOR_CARTONS[1])}
                     title="Click to feature in center"
                   >
-                    <div style={{ textAlign: 'center', marginBottom: '6px', font: "700 10px 'JetBrains Mono', monospace", background: '#1A1230', color: '#fff', padding: '3px 10px', borderRadius: '99px', border: '1.5px solid var(--ink)', boxShadow: '2px 2px 0 var(--ink)' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '8px', font: "700 10px 'JetBrains Mono', monospace", background: '#1A1230', color: '#fff', padding: '4px 12px', borderRadius: '99px', border: '1.5px solid var(--ink)', boxShadow: '2px 2px 0 var(--ink)' }}>
                       {(SPONSOR_CARTONS[6] || SPONSOR_CARTONS[1]).name.toUpperCase()}
                     </div>
                     <div style={{ width: '100%', pointerEvents: 'none' }}>
@@ -293,6 +286,7 @@ export default function App() {
                         autoSpin={true}
                         hideControls={true}
                         stageHeight={350}
+                        translateYOffset={20}
                       />
                     </div>
                   </div>
@@ -376,7 +370,7 @@ export default function App() {
                     </div>
 
                     <div style={{ background: '#F6F3EC', border: '1.5px solid var(--ink)', borderRadius: '16px', overflow: 'hidden', padding: '10px 0' }}>
-                      <InteractiveCarton3D carton={carton} scale={0.46} autoSpin={false} stageHeight={470} />
+                      <InteractiveCarton3D carton={carton} scale={0.40} autoSpin={false} stageHeight={430} translateYOffset={25} />
                     </div>
 
                     <div style={{ marginTop: '16px', display: 'flex', gap: '8px' }}>
@@ -492,9 +486,9 @@ export default function App() {
                     </a>
                   </div>
 
-                  <div style={{ width: '100%', background: '#EDEAE2', borderRadius: '16px', border: '1.5px solid var(--ink)', padding: '12px 0' }}>
-                    <InteractiveCarton3D carton={SPONSOR_CARTONS[0]} scale={0.46} autoSpin={true} stageHeight={470} />
-                  </div>
+                    <div style={{ width: '100%', background: '#EDEAE2', borderRadius: '16px', border: '1.5px solid var(--ink)', padding: '12px 0' }}>
+                      <InteractiveCarton3D carton={SPONSOR_CARTONS[0]} scale={0.40} autoSpin={true} stageHeight={430} translateYOffset={25} />
+                    </div>
 
                   <div style={{ marginTop: '16px', textAlign: 'center', fontSize: '12px', color: '#666' }}>
                     Drag to rotate · Switch views · Click <b>"Open Full Template Generator"</b> to edit your brand name, colors, and QR link live.
