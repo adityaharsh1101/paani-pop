@@ -187,12 +187,12 @@ export default function App() {
               </div>
 
               {/* Real 3D Carton Showcase: 2-3 startup bottles + 1 empty "This could be yours" */}
-              <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', minHeight: '560px' }}>
+              <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', minHeight: '600px' }}>
                 <div className="sunburst" style={{ zIndex: 1, opacity: 0.85 }}></div>
                 <div className="star one" style={{ zIndex: 2 }}>✳</div>
                 <div className="star two" style={{ zIndex: 2 }}>✳</div>
                 <div className="tape" style={{ zIndex: 5, top: '-25px', left: '10px' }}>3D REAL SPONSOR DROPS · DRAG TO ROTATE</div>
-                <div className="burst-note" style={{ zIndex: 5, right: '0px', bottom: '10px' }}>
+                <div className="burst-note" style={{ zIndex: 5, right: '0px', bottom: '0px' }}>
                   SPONSORED<br />BY REAL<br />BRANDS ✳
                 </div>
 
@@ -229,11 +229,11 @@ export default function App() {
                     <div style={{ width: '100%', pointerEvents: 'none' }}>
                       <InteractiveCarton3D
                         carton={SPONSOR_CARTONS[2] || SPONSOR_CARTONS[1]}
-                        scale={0.34}
+                        scale={0.30}
                         autoSpin={true}
                         hideControls={true}
-                        stageHeight={350}
-                        translateYOffset={20}
+                        stageHeight={340}
+                        translateYOffset={0}
                       />
                     </div>
                   </div>
@@ -247,18 +247,18 @@ export default function App() {
                       filter: 'drop-shadow(10px 14px 0 rgba(23,23,23,0.18))'
                     }}
                   >
-                    <div style={{ textAlign: 'center', marginBottom: '18px', position: 'relative', zIndex: 10 }}>
+                    <div style={{ textAlign: 'center', marginBottom: '14px', position: 'relative', zIndex: 10 }}>
                       <span style={{ font: "800 11px 'DM Mono', monospace", background: 'var(--lime)', border: '1.5px solid var(--ink)', color: 'var(--ink)', padding: '6px 14px', borderRadius: '99px', boxShadow: '2px 2px 0 var(--ink)', display: 'inline-block', whiteSpace: 'nowrap' }}>
                         ✦ {activeHeroCarton.id === 'custom-empty' ? 'THIS COULD BE YOURS! (CUSTOM SPONSOR SPOT)' : `${activeHeroCarton.name.toUpperCase()} · OFFICIAL DROP`}
                       </span>
                     </div>
                     <InteractiveCarton3D
                       carton={activeHeroCarton}
-                      scale={0.42}
+                      scale={0.36}
                       autoSpin={false}
                       hideControls={false}
-                      stageHeight={450}
-                      translateYOffset={25}
+                      stageHeight={420}
+                      translateYOffset={0}
                     />
                   </div>
 
@@ -282,11 +282,11 @@ export default function App() {
                     <div style={{ width: '100%', pointerEvents: 'none' }}>
                       <InteractiveCarton3D
                         carton={SPONSOR_CARTONS[6] || SPONSOR_CARTONS[1]}
-                        scale={0.34}
+                        scale={0.30}
                         autoSpin={true}
                         hideControls={true}
-                        stageHeight={350}
-                        translateYOffset={20}
+                        stageHeight={340}
+                        translateYOffset={0}
                       />
                     </div>
                   </div>
@@ -370,7 +370,7 @@ export default function App() {
                     </div>
 
                     <div style={{ background: '#F6F3EC', border: '1.5px solid var(--ink)', borderRadius: '16px', overflow: 'hidden', padding: '10px 0' }}>
-                      <InteractiveCarton3D carton={carton} scale={0.40} autoSpin={false} stageHeight={430} translateYOffset={25} />
+                      <InteractiveCarton3D carton={carton} scale={0.36} autoSpin={false} stageHeight={410} translateYOffset={0} />
                     </div>
 
                     <div style={{ marginTop: '16px', display: 'flex', gap: '8px' }}>
@@ -487,7 +487,7 @@ export default function App() {
                   </div>
 
                     <div style={{ width: '100%', background: '#EDEAE2', borderRadius: '16px', border: '1.5px solid var(--ink)', padding: '12px 0' }}>
-                      <InteractiveCarton3D carton={SPONSOR_CARTONS[0]} scale={0.40} autoSpin={true} stageHeight={430} translateYOffset={25} />
+                      <InteractiveCarton3D carton={SPONSOR_CARTONS[0]} scale={0.36} autoSpin={true} stageHeight={410} translateYOffset={0} />
                     </div>
 
                   <div style={{ marginTop: '16px', textAlign: 'center', fontSize: '12px', color: '#666' }}>
