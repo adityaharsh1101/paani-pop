@@ -12,8 +12,8 @@ export default function App() {
   const [opsPage, setOpsPage] = useState('overview');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
-  // Hero active carton
-  const [activeHeroCarton, setActiveHeroCarton] = useState<SponsorCartonData>(SPONSOR_CARTONS[0]); // Hashlilly
+  // Hero active carton (defaulting to the empty 'This could be yours' template carton)
+  const [activeHeroCarton, setActiveHeroCarton] = useState<SponsorCartonData>(SPONSOR_CARTONS[0]); // custom-empty
   // Creative studio active carton
   const [creativeCarton, setCreativeCarton] = useState<SponsorCartonData>(SPONSOR_CARTONS[0]);
 
@@ -195,17 +195,65 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Real 3D Carton Stage replacing flat cartoon */}
-              <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <div className="sunburst" style={{ zIndex: 1, opacity: 0.7 }}></div>
+              {/* Real 3D Carton Trio Cluster: 2-3 real bottles + 1 'This could be yours' */}
+              <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', minHeight: '520px' }}>
+                <div className="sunburst" style={{ zIndex: 1, opacity: 0.85 }}></div>
                 <div className="star one" style={{ zIndex: 2 }}>✳</div>
-                <div className="tape" style={{ zIndex: 4, top: '10px', left: '10px' }}>3D INTERACTIVE CARTOON · DRAG ME</div>
-                <div className="burst-note" style={{ zIndex: 4, right: '-10px', bottom: '20px' }}>
-                  SPONSORED<br />BY {activeHeroCarton.name.toUpperCase()} ✳
+                <div className="star two" style={{ zIndex: 2 }}>✳</div>
+                <div className="tape" style={{ zIndex: 4, top: '5px', left: '15px' }}>3D REAL SPONSOR DROPS · DRAG TO ROTATE</div>
+                <div className="burst-note" style={{ zIndex: 4, right: '-5px', bottom: '25px' }}>
+                  SPONSORED<br />BY REAL<br />BRANDS ✳
                 </div>
-                
-                <div style={{ position: 'relative', zIndex: 3, width: '100%', maxWidth: '380px' }}>
-                  <InteractiveCarton3D carton={activeHeroCarton} scale={0.55} autoSpin={true} />
+
+                {/* Left Background Carton: InfluenceOS / Soulamore */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    left: '5%',
+                    top: '60px',
+                    zIndex: 2,
+                    transform: 'rotate(-8deg) scale(0.72)',
+                    opacity: 0.95
+                  }}
+                >
+                  <div style={{ textAlign: 'center', marginBottom: '4px', font: "700 9px 'JetBrains Mono'", background: 'var(--blue)', color: '#fff', padding: '3px 8px', borderRadius: '99px' }}>
+                    INFLUENCEOS
+                  </div>
+                  <InteractiveCarton3D carton={SPONSOR_CARTONS[3]} scale={0.42} autoSpin={true} />
+                </div>
+
+                {/* Right Background Carton: Hashlilly Flagship */}
+                <div
+                  style={{
+                    position: 'absolute',
+                    right: '5%',
+                    top: '30px',
+                    zIndex: 2,
+                    transform: 'rotate(9deg) scale(0.72)',
+                    opacity: 0.95
+                  }}
+                >
+                  <div style={{ textAlign: 'center', marginBottom: '4px', font: "700 9px 'JetBrains Mono'", background: '#1A1230', color: '#fff', padding: '3px 8px', borderRadius: '99px' }}>
+                    HASHLILLY
+                  </div>
+                  <InteractiveCarton3D carton={SPONSOR_CARTONS[1]} scale={0.42} autoSpin={true} />
+                </div>
+
+                {/* Center Foreground Feature Carton: THIS COULD BE YOURS! */}
+                <div
+                  style={{
+                    position: 'relative',
+                    zIndex: 3,
+                    marginTop: '25px',
+                    filter: 'drop-shadow(15px 18px 0 rgba(23,23,23,0.18))'
+                  }}
+                >
+                  <div style={{ textAlign: 'center', marginBottom: '6px' }}>
+                    <span style={{ font: "800 11px 'DM Mono', monospace", background: 'var(--lime)', border: '1.5px solid var(--ink)', color: 'var(--ink)', padding: '5px 12px', borderRadius: '99px', boxShadow: '2px 2px 0 var(--ink)' }}>
+                      ✦ THIS COULD BE YOURS! (CUSTOM SPONSOR SPOT)
+                    </span>
+                  </div>
+                  <InteractiveCarton3D carton={activeHeroCarton} scale={0.55} autoSpin={false} />
                 </div>
               </div>
             </div>
@@ -427,36 +475,36 @@ export default function App() {
               <div className="edition-grid">
                 <article className="edition her reveal visible">
                   <div>
-                    <div className="edition-num">EDITION 001 / SOULAMORE VIBE</div>
+                    <div className="edition-num">EDITION 001 / SOULAMORE DROP</div>
                     <h3>GENTLE &<br />MINDFUL<br />HYDRATION.</h3>
-                    <p>Therapy circles, soft peach gables, and open dialogue.</p>
+                    <p>Peach gable, wellness circles, and therapist helpline QR.</p>
                     <div style={{ marginTop: '20px' }}>
-                      <InteractiveCarton3D carton={SPONSOR_CARTONS[1]} scale={0.34} autoSpin={true} />
+                      <InteractiveCarton3D carton={SPONSOR_CARTONS[2]} scale={0.34} autoSpin={true} />
                     </div>
                   </div>
                   <div className="foot"><span>For the plot.</span><b>♡</b></div>
                 </article>
                 <article className="edition him reveal visible">
                   <div>
-                    <div className="edition-num">EDITION 002 / INFLUENCEOS & BUILDER</div>
-                    <h3>CREATORS.<br />ESCRW.<br />METRICS.</h3>
-                    <p>Electric violet packaging. Escrow paid per view.</p>
+                    <div className="edition-num">EDITION 002 / INFLUENCEOS & BUILDERS</div>
+                    <h3>CREATORS.<br />ESCROW.<br />METRICS.</h3>
+                    <p>Electric violet packaging. Escrow paid per verified view.</p>
                     <div style={{ marginTop: '20px' }}>
-                      <InteractiveCarton3D carton={SPONSOR_CARTONS[2]} scale={0.34} autoSpin={true} />
+                      <InteractiveCarton3D carton={SPONSOR_CARTONS[3]} scale={0.34} autoSpin={true} />
                     </div>
                   </div>
                   <div className="foot"><span>Stay sharp, bro.</span><b>✳</b></div>
                 </article>
-                <article className="edition all reveal visible">
+                <article className="edition all reveal visible" style={{ background: 'var(--lime)', color: 'var(--ink)' }}>
                   <div>
-                    <div className="edition-num">EDITION 003 / HASHLILLY FLAGSHIP</div>
-                    <h3>NO MIDDLEMEN.<br />OWN YOUR<br />AUDIENCE.</h3>
-                    <p>Cosmic dark purple radial packaging with custom QR.</p>
+                    <div className="edition-num" style={{ color: 'var(--blue)', fontWeight: 800 }}>EDITION 003 / YOUR BRAND HERE</div>
+                    <h3 style={{ color: 'var(--ink)' }}>THIS COULD<br />BE YOUR<br />CARTON.</h3>
+                    <p style={{ color: '#222' }}>Your logo, brand story, custom colors, and QR code in thousands of hands.</p>
                     <div style={{ marginTop: '20px' }}>
                       <InteractiveCarton3D carton={SPONSOR_CARTONS[0]} scale={0.34} autoSpin={true} />
                     </div>
                   </div>
-                  <div className="foot"><span>Choose your own vibe.</span><b>☺</b></div>
+                  <div className="foot"><a href="/cartons/carton-template.html" target="_blank" rel="noreferrer" style={{ textDecoration: 'underline', fontWeight: 800 }}>Customise now ↗</a><b>★</b></div>
                 </article>
               </div>
             </div>

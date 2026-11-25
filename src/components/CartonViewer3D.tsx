@@ -17,6 +17,76 @@ export interface SponsorCartonData {
 
 export const SPONSOR_CARTONS: SponsorCartonData[] = [
   {
+    id: 'custom-empty',
+    name: 'Your Brand Here',
+    tagline: 'This could be yours. Your logo, colors, campaign QR code, and real-world distribution.',
+    roofColor: '#d6ff42',
+    roofInk: '#161616',
+    bgGrad: 'linear-gradient(170deg, #FFFFFF 0%, #F5F5ED 100%)',
+    textColor: '#161616',
+    badgeText: 'THIS COULD BE YOURS',
+    frontHtml: (
+      <div style={{ display: 'flex', flexDirection: 'column', height: '100%', justifyContent: 'space-between' }}>
+        <div>
+          <div style={{ fontSize: '11px', fontFamily: '"JetBrains Mono", monospace', letterSpacing: '1.5px', color: '#5068ff', textTransform: 'uppercase', marginBottom: '8px' }}>
+            YOUR BRAND SPOT ✦
+          </div>
+          <h2 style={{ font: "900 38px/.92 'Space Grotesk', sans-serif", margin: 0, letterSpacing: '-1.5px', textTransform: 'uppercase' }}>
+            THIS<br />
+            COULD BE<br />
+            <span style={{ background: '#d6ff42', padding: '0 6px', border: '1.5px solid #161616', borderRadius: '4px', display: 'inline-block', transform: 'rotate(-2deg)' }}>
+              YOURS!
+            </span>
+          </h2>
+          <div style={{ border: '2px dashed #161616', borderRadius: '12px', padding: '12px', marginTop: '16px', background: 'rgba(214,255,66,0.2)' }}>
+            <p style={{ fontSize: '13px', lineHeight: 1.45, margin: 0, fontWeight: 700 }}>
+              Put your company billboard into thousands of real hands at events, campuses & summits.
+            </p>
+          </div>
+        </div>
+        <div style={{ borderTop: '2px solid #161616', paddingTop: '9px', display: 'flex', justifyContent: 'space-between', fontSize: '10px', fontFamily: '"JetBrains Mono", monospace' }}>
+          <span style={{ fontWeight: 900 }}>PAANI POP!</span>
+          <span>SPONSOR PACK · 500 ML</span>
+        </div>
+      </div>
+    ),
+    sideAHtml: (
+      <div>
+        <div style={{ fontSize: '11px', fontFamily: '"JetBrains Mono", monospace', letterSpacing: '1.5px', color: '#5068ff', textTransform: 'uppercase' }}>YOUR CAMPAIGN</div>
+        <h3 style={{ font: "800 24px/1.1 'Space Grotesk', sans-serif", margin: '6px 0 10px' }}>Your headline.<br />Your voice.</h3>
+        <p style={{ fontSize: '12px', lineHeight: 1.45 }}>Tell your brand story, announce your product launch, or recruit the brightest talent.</p>
+        <div style={{ border: '1.5px dashed #aaa', borderRadius: '8px', padding: '10px', marginTop: '12px', fontSize: '11px', color: '#666' }}>
+          [RESERVED FOR YOUR CAMPAIGN BULLETS]
+        </div>
+      </div>
+    ),
+    backHtml: (
+      <div>
+        <div style={{ fontSize: '11px', fontFamily: '"JetBrains Mono", monospace', letterSpacing: '1.5px', color: '#5068ff', textTransform: 'uppercase' }}>INTERACTIVE QR</div>
+        <h3 style={{ font: "800 22px/1.1 'Space Grotesk', sans-serif", margin: '6px 0 10px' }}>Your Website</h3>
+        <div style={{ background: '#fff', color: '#161616', padding: '12px', borderRadius: '8px', border: '1.5px solid #161616', display: 'inline-flex', flexDirection: 'column', alignItems: 'center', gap: '6px', margin: '8px 0' }}>
+          <div style={{ width: '85px', height: '85px', border: '2px dashed #161616', borderRadius: '6px', display: 'grid', placeItems: 'center', fontWeight: 800, fontSize: '10px', textAlign: 'center', color: '#5068ff', background: '#f5f5ff' }}>
+            YOUR<br />QR CODE<br />HERE
+          </div>
+          <span style={{ font: "700 11px/1 'JetBrains Mono', monospace" }}>yourbrand.com</span>
+        </div>
+        <div style={{ fontSize: '11px', color: '#666', marginTop: '8px' }}>
+          Visitors scan to claim your offer, app download, or survey.
+        </div>
+      </div>
+    ),
+    sideBHtml: (
+      <div>
+        <div style={{ fontSize: '11px', fontFamily: '"JetBrains Mono", monospace', letterSpacing: '1.5px', color: '#5068ff', textTransform: 'uppercase' }}>DISTRIBUTION</div>
+        <h3 style={{ font: "800 22px/1.1 'Space Grotesk', sans-serif", margin: '6px 0 10px' }}>Targeted Drops</h3>
+        <p style={{ fontSize: '12px', lineHeight: 1.45 }}>We deliver your water cartons to curated banquets, student festivals, tech summits, or offices.</p>
+        <div style={{ background: '#d6ff42', border: '1.5px solid #161616', borderRadius: '8px', padding: '10px', marginTop: '14px', fontSize: '11px', fontWeight: 700 }}>
+          ⚡ 100% Free water. 100% Brand attention.
+        </div>
+      </div>
+    )
+  },
+  {
     id: 'hashlilly',
     name: 'Hashlilly',
     tagline: 'The lab behind the tools. Own your work, own your audience, no algorithm tax.',
