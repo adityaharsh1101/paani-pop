@@ -195,65 +195,107 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Real 3D Carton Trio Cluster: 2-3 real bottles + 1 'This could be yours' */}
-              <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', minHeight: '520px' }}>
+              {/* Real 3D Carton Showcase: 2-3 startup bottles + 1 empty "This could be yours" */}
+              <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', minHeight: '560px' }}>
                 <div className="sunburst" style={{ zIndex: 1, opacity: 0.85 }}></div>
                 <div className="star one" style={{ zIndex: 2 }}>✳</div>
                 <div className="star two" style={{ zIndex: 2 }}>✳</div>
-                <div className="tape" style={{ zIndex: 4, top: '5px', left: '15px' }}>3D REAL SPONSOR DROPS · DRAG TO ROTATE</div>
-                <div className="burst-note" style={{ zIndex: 4, right: '-5px', bottom: '25px' }}>
+                <div className="tape" style={{ zIndex: 5, top: '0px', left: '10px' }}>3D REAL SPONSOR DROPS · DRAG TO ROTATE</div>
+                <div className="burst-note" style={{ zIndex: 5, right: '0px', bottom: '10px' }}>
                   SPONSORED<br />BY REAL<br />BRANDS ✳
                 </div>
 
-                {/* Left Background Carton: InfluenceOS / Soulamore */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    left: '5%',
-                    top: '60px',
-                    zIndex: 2,
-                    transform: 'rotate(-8deg) scale(0.72)',
-                    opacity: 0.95
-                  }}
-                >
-                  <div style={{ textAlign: 'center', marginBottom: '4px', font: "700 9px 'JetBrains Mono'", background: 'var(--blue)', color: '#fff', padding: '3px 8px', borderRadius: '99px' }}>
-                    INFLUENCEOS
-                  </div>
-                  <InteractiveCarton3D carton={SPONSOR_CARTONS[3]} scale={0.42} autoSpin={true} />
-                </div>
-
-                {/* Right Background Carton: Hashlilly Flagship */}
-                <div
-                  style={{
-                    position: 'absolute',
-                    right: '5%',
-                    top: '30px',
-                    zIndex: 2,
-                    transform: 'rotate(9deg) scale(0.72)',
-                    opacity: 0.95
-                  }}
-                >
-                  <div style={{ textAlign: 'center', marginBottom: '4px', font: "700 9px 'JetBrains Mono'", background: '#1A1230', color: '#fff', padding: '3px 8px', borderRadius: '99px' }}>
-                    HASHLILLY
-                  </div>
-                  <InteractiveCarton3D carton={SPONSOR_CARTONS[1]} scale={0.42} autoSpin={true} />
-                </div>
-
-                {/* Center Foreground Feature Carton: THIS COULD BE YOURS! */}
+                {/* Visible Side-by-Side Trio: Left (Startup), Center (This Could Be Yours / Active), Right (Startup) */}
                 <div
                   style={{
                     position: 'relative',
                     zIndex: 3,
-                    marginTop: '25px',
-                    filter: 'drop-shadow(15px 18px 0 rgba(23,23,23,0.18))'
+                    display: 'flex',
+                    alignItems: 'flex-end',
+                    justifyContent: 'center',
+                    gap: '12px',
+                    width: '100%',
+                    marginTop: '32px'
                   }}
                 >
-                  <div style={{ textAlign: 'center', marginBottom: '6px' }}>
-                    <span style={{ font: "800 11px 'DM Mono', monospace", background: 'var(--lime)', border: '1.5px solid var(--ink)', color: 'var(--ink)', padding: '5px 12px', borderRadius: '99px', boxShadow: '2px 2px 0 var(--ink)' }}>
-                      ✦ THIS COULD BE YOURS! (CUSTOM SPONSOR SPOT)
-                    </span>
+                  {/* Left Side Carton: InfluenceOS / ResumeEngine */}
+                  <div
+                    style={{
+                      flex: '0 1 180px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      transition: 'transform 0.3s ease',
+                      transform: 'rotate(-4deg)'
+                    }}
+                    onClick={() => setActiveHeroCarton(SPONSOR_CARTONS[2] || SPONSOR_CARTONS[1])}
+                    title="Click to feature in center"
+                  >
+                    <div style={{ textAlign: 'center', marginBottom: '6px', font: "700 10px 'JetBrains Mono', monospace", background: 'var(--blue)', color: '#fff', padding: '3px 10px', borderRadius: '99px', border: '1.5px solid var(--ink)', boxShadow: '2px 2px 0 var(--ink)' }}>
+                      {(SPONSOR_CARTONS[2] || SPONSOR_CARTONS[1]).name.toUpperCase()}
+                    </div>
+                    <div style={{ width: '100%', pointerEvents: 'none' }}>
+                      <InteractiveCarton3D
+                        carton={SPONSOR_CARTONS[2] || SPONSOR_CARTONS[1]}
+                        scale={0.34}
+                        autoSpin={true}
+                        hideControls={true}
+                        stageHeight={350}
+                      />
+                    </div>
                   </div>
-                  <InteractiveCarton3D carton={activeHeroCarton} scale={0.55} autoSpin={false} />
+
+                  {/* Center Feature Carton: THIS COULD BE YOURS! (or selected startup) */}
+                  <div
+                    style={{
+                      flex: '1 1 320px',
+                      maxWidth: '360px',
+                      zIndex: 4,
+                      filter: 'drop-shadow(10px 14px 0 rgba(23,23,23,0.18))'
+                    }}
+                  >
+                    <div style={{ textAlign: 'center', marginBottom: '6px' }}>
+                      <span style={{ font: "800 11px 'DM Mono', monospace", background: 'var(--lime)', border: '1.5px solid var(--ink)', color: 'var(--ink)', padding: '5px 14px', borderRadius: '99px', boxShadow: '2px 2px 0 var(--ink)' }}>
+                        ✦ {activeHeroCarton.id === 'custom-empty' ? 'THIS COULD BE YOURS! (CUSTOM SPONSOR SPOT)' : `${activeHeroCarton.name.toUpperCase()} · OFFICIAL DROP`}
+                      </span>
+                    </div>
+                    <InteractiveCarton3D
+                      carton={activeHeroCarton}
+                      scale={0.48}
+                      autoSpin={false}
+                      hideControls={false}
+                      stageHeight={470}
+                    />
+                  </div>
+
+                  {/* Right Side Carton: Hashlilly / Soulamore */}
+                  <div
+                    style={{
+                      flex: '0 1 180px',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      alignItems: 'center',
+                      transition: 'transform 0.3s ease',
+                      transform: 'rotate(4deg)'
+                    }}
+                    onClick={() => setActiveHeroCarton(SPONSOR_CARTONS[6] || SPONSOR_CARTONS[1])}
+                    title="Click to feature in center"
+                  >
+                    <div style={{ textAlign: 'center', marginBottom: '6px', font: "700 10px 'JetBrains Mono', monospace", background: '#1A1230', color: '#fff', padding: '3px 10px', borderRadius: '99px', border: '1.5px solid var(--ink)', boxShadow: '2px 2px 0 var(--ink)' }}>
+                      {(SPONSOR_CARTONS[6] || SPONSOR_CARTONS[1]).name.toUpperCase()}
+                    </div>
+                    <div style={{ width: '100%', pointerEvents: 'none' }}>
+                      <InteractiveCarton3D
+                        carton={SPONSOR_CARTONS[6] || SPONSOR_CARTONS[1]}
+                        scale={0.34}
+                        autoSpin={true}
+                        hideControls={true}
+                        stageHeight={350}
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -313,11 +355,11 @@ export default function App() {
                   >
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-                        <span style={{ font: "700 10px 'JetBrains Mono', monospace", background: carton.roofColor, color: carton.roofInk, padding: '4px 8px', borderRadius: '99px' }}>
-                          {carton.badgeText}
+                        <span style={{ font: "700 10px 'JetBrains Mono', monospace", background: carton.roof, color: carton.roofink, padding: '4px 8px', borderRadius: '99px', border: '1px solid var(--ink)' }}>
+                          {carton.tag}
                         </span>
                         <a
-                          href={`/cartons/carton-${carton.id}.html`}
+                          href={`/cartons/carton-${carton.id === 'custom-empty' ? 'template' : carton.id}.html`}
                           target="_blank"
                           rel="noreferrer"
                           style={{ font: "700 11px 'DM Sans', sans-serif", color: 'var(--blue)', textDecoration: 'none' }}
@@ -329,12 +371,12 @@ export default function App() {
                         {carton.name}
                       </h3>
                       <p style={{ fontSize: '13px', color: '#555', margin: '0 0 14px', lineHeight: 1.4 }}>
-                        {carton.tagline}
+                        {carton.desc}
                       </p>
                     </div>
 
                     <div style={{ background: '#F6F3EC', border: '1.5px solid var(--ink)', borderRadius: '16px', overflow: 'hidden', padding: '10px 0' }}>
-                      <InteractiveCarton3D carton={carton} scale={0.48} autoSpin={false} />
+                      <InteractiveCarton3D carton={carton} scale={0.46} autoSpin={false} stageHeight={470} />
                     </div>
 
                     <div style={{ marginTop: '16px', display: 'flex', gap: '8px' }}>
@@ -451,7 +493,7 @@ export default function App() {
                   </div>
 
                   <div style={{ width: '100%', background: '#EDEAE2', borderRadius: '16px', border: '1.5px solid var(--ink)', padding: '12px 0' }}>
-                    <InteractiveCarton3D carton={SPONSOR_CARTONS[3]} scale={0.52} autoSpin={true} />
+                    <InteractiveCarton3D carton={SPONSOR_CARTONS[0]} scale={0.46} autoSpin={true} stageHeight={470} />
                   </div>
 
                   <div style={{ marginTop: '16px', textAlign: 'center', fontSize: '12px', color: '#666' }}>
@@ -479,7 +521,7 @@ export default function App() {
                     <h3>GENTLE &<br />MINDFUL<br />HYDRATION.</h3>
                     <p>Peach gable, wellness circles, and therapist helpline QR.</p>
                     <div style={{ marginTop: '20px' }}>
-                      <InteractiveCarton3D carton={SPONSOR_CARTONS[2]} scale={0.34} autoSpin={true} />
+                      <InteractiveCarton3D carton={SPONSOR_CARTONS[1]} scale={0.28} autoSpin={true} hideControls={true} stageHeight={270} />
                     </div>
                   </div>
                   <div className="foot"><span>For the plot.</span><b>♡</b></div>
@@ -490,7 +532,7 @@ export default function App() {
                     <h3>CREATORS.<br />ESCROW.<br />METRICS.</h3>
                     <p>Electric violet packaging. Escrow paid per verified view.</p>
                     <div style={{ marginTop: '20px' }}>
-                      <InteractiveCarton3D carton={SPONSOR_CARTONS[3]} scale={0.34} autoSpin={true} />
+                      <InteractiveCarton3D carton={SPONSOR_CARTONS[2]} scale={0.28} autoSpin={true} hideControls={true} stageHeight={270} />
                     </div>
                   </div>
                   <div className="foot"><span>Stay sharp, bro.</span><b>✳</b></div>
@@ -501,7 +543,7 @@ export default function App() {
                     <h3 style={{ color: 'var(--ink)' }}>THIS COULD<br />BE YOUR<br />CARTON.</h3>
                     <p style={{ color: '#222' }}>Your logo, brand story, custom colors, and QR code in thousands of hands.</p>
                     <div style={{ marginTop: '20px' }}>
-                      <InteractiveCarton3D carton={SPONSOR_CARTONS[0]} scale={0.34} autoSpin={true} />
+                      <InteractiveCarton3D carton={SPONSOR_CARTONS[0]} scale={0.28} autoSpin={true} hideControls={true} stageHeight={270} />
                     </div>
                   </div>
                   <div className="foot"><a href="/cartons/carton-template.html" target="_blank" rel="noreferrer" style={{ textDecoration: 'underline', fontWeight: 800 }}>Customise now ↗</a><b>★</b></div>
@@ -1017,7 +1059,7 @@ export default function App() {
                           <div className="panelhead">
                             <h3>3D Carton Proof · {creativeCarton.name}</h3>
                             <a
-                              href={`/cartons/carton-${creativeCarton.id}.html`}
+                              href={`/cartons/carton-${creativeCarton.id === 'custom-empty' ? 'template' : creativeCarton.id}.html`}
                               target="_blank"
                               rel="noreferrer"
                               style={{ font: "700 11px 'DM Sans'", color: 'var(--blue)' }}
@@ -1027,7 +1069,7 @@ export default function App() {
                           </div>
                           
                           <div style={{ background: '#f0eee5', border: '1.5px dashed var(--ink)', padding: '16px', borderRadius: '16px' }}>
-                            <InteractiveCarton3D carton={creativeCarton} scale={0.46} autoSpin={true} />
+                            <InteractiveCarton3D carton={creativeCarton} scale={0.46} autoSpin={true} stageHeight={470} />
                           </div>
 
                           <div className="actions" style={{ marginTop: '14px' }}>
