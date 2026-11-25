@@ -11,9 +11,9 @@ export default function App() {
   const [brandPage, setBrandPage] = useState('overview');
   const [opsPage, setOpsPage] = useState('overview');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  
-  // Hero active carton (defaulting to the empty 'This could be yours' template carton)
-  const [activeHeroCarton, setActiveHeroCarton] = useState<SponsorCartonData>(SPONSOR_CARTONS[0]); // custom-empty
+
+  // Hero active carton
+  const [activeHeroCarton, setActiveHeroCarton] = useState<SponsorCartonData>(SPONSOR_CARTONS[0]); // Hashlilly
   // Creative studio active carton
   const [creativeCarton, setCreativeCarton] = useState<SponsorCartonData>(SPONSOR_CARTONS[0]);
 
@@ -165,7 +165,7 @@ export default function App() {
                   <button className="btn" style={{ background: '#fff' }} onClick={() => setActiveTab('portal')}>OPEN DASHBOARD PLAYGROUND ⚡</button>
                 </div>
                 <div className="micro">500 ML OF HYDRATION. 100% LESS BORING. REAL 3D PACKAGING BELOW.</div>
-                
+
                 {/* Brand Selector for Hero 3D Carton */}
                 <div style={{ marginTop: '22px' }}>
                   <span style={{ font: "700 11px 'DM Mono', monospace", color: '#555', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
@@ -200,7 +200,7 @@ export default function App() {
                 <div className="sunburst" style={{ zIndex: 1, opacity: 0.85 }}></div>
                 <div className="star one" style={{ zIndex: 2 }}>✳</div>
                 <div className="star two" style={{ zIndex: 2 }}>✳</div>
-                <div className="tape" style={{ zIndex: 5, top: '0px', left: '10px' }}>3D REAL SPONSOR DROPS · DRAG TO ROTATE</div>
+                <div className="tape" style={{ zIndex: 5, top: '-25px', left: '10px' }}>3D REAL SPONSOR DROPS · DRAG TO ROTATE</div>
                 <div className="burst-note" style={{ zIndex: 5, right: '0px', bottom: '10px' }}>
                   SPONSORED<br />BY REAL<br />BRANDS ✳
                 </div>
@@ -255,14 +255,14 @@ export default function App() {
                       filter: 'drop-shadow(10px 14px 0 rgba(23,23,23,0.18))'
                     }}
                   >
-                    <div style={{ textAlign: 'center', marginBottom: '6px' }}>
-                      <span style={{ font: "800 11px 'DM Mono', monospace", background: 'var(--lime)', border: '1.5px solid var(--ink)', color: 'var(--ink)', padding: '5px 14px', borderRadius: '99px', boxShadow: '2px 2px 0 var(--ink)' }}>
+                    <div style={{ textAlign: 'center', marginBottom: '14px', position: 'relative', zIndex: 10 }}>
+                      <span style={{ font: "800 11px 'DM Mono', monospace", background: 'var(--lime)', border: '1.5px solid var(--ink)', color: 'var(--ink)', padding: '6px 14px', borderRadius: '99px', boxShadow: '2px 2px 0 var(--ink)', display: 'inline-block', whiteSpace: 'nowrap' }}>
                         ✦ {activeHeroCarton.id === 'custom-empty' ? 'THIS COULD BE YOURS! (CUSTOM SPONSOR SPOT)' : `${activeHeroCarton.name.toUpperCase()} · OFFICIAL DROP`}
                       </span>
                     </div>
                     <InteractiveCarton3D
                       carton={activeHeroCarton}
-                      scale={0.48}
+                      scale={0.46}
                       autoSpin={false}
                       hideControls={false}
                       stageHeight={470}
@@ -517,9 +517,9 @@ export default function App() {
               <div className="edition-grid">
                 <article className="edition her reveal visible">
                   <div>
-                    <div className="edition-num">EDITION 001 / SOULAMORE DROP</div>
+                    <div className="edition-num">EDITION 001 / SOULAMORE VIBE</div>
                     <h3>GENTLE &<br />MINDFUL<br />HYDRATION.</h3>
-                    <p>Peach gable, wellness circles, and therapist helpline QR.</p>
+                    <p>Therapy circles, soft peach gables, and open dialogue.</p>
                     <div style={{ marginTop: '20px' }}>
                       <InteractiveCarton3D carton={SPONSOR_CARTONS[1]} scale={0.28} autoSpin={true} hideControls={true} stageHeight={270} />
                     </div>
@@ -528,25 +528,25 @@ export default function App() {
                 </article>
                 <article className="edition him reveal visible">
                   <div>
-                    <div className="edition-num">EDITION 002 / INFLUENCEOS & BUILDERS</div>
-                    <h3>CREATORS.<br />ESCROW.<br />METRICS.</h3>
-                    <p>Electric violet packaging. Escrow paid per verified view.</p>
+                    <div className="edition-num">EDITION 002 / INFLUENCEOS & BUILDER</div>
+                    <h3>CREATORS.<br />ESCRW.<br />METRICS.</h3>
+                    <p>Electric violet packaging. Escrow paid per view.</p>
                     <div style={{ marginTop: '20px' }}>
                       <InteractiveCarton3D carton={SPONSOR_CARTONS[2]} scale={0.28} autoSpin={true} hideControls={true} stageHeight={270} />
                     </div>
                   </div>
                   <div className="foot"><span>Stay sharp, bro.</span><b>✳</b></div>
                 </article>
-                <article className="edition all reveal visible" style={{ background: 'var(--lime)', color: 'var(--ink)' }}>
+                <article className="edition all reveal visible">
                   <div>
-                    <div className="edition-num" style={{ color: 'var(--blue)', fontWeight: 800 }}>EDITION 003 / YOUR BRAND HERE</div>
-                    <h3 style={{ color: 'var(--ink)' }}>THIS COULD<br />BE YOUR<br />CARTON.</h3>
-                    <p style={{ color: '#222' }}>Your logo, brand story, custom colors, and QR code in thousands of hands.</p>
+                    <div className="edition-num">EDITION 003 / HASHLILLY FLAGSHIP</div>
+                    <h3>NO MIDDLEMEN.<br />OWN YOUR<br />AUDIENCE.</h3>
+                    <p>Cosmic dark purple radial packaging with custom QR.</p>
                     <div style={{ marginTop: '20px' }}>
                       <InteractiveCarton3D carton={SPONSOR_CARTONS[0]} scale={0.28} autoSpin={true} hideControls={true} stageHeight={270} />
                     </div>
                   </div>
-                  <div className="foot"><a href="/cartons/carton-template.html" target="_blank" rel="noreferrer" style={{ textDecoration: 'underline', fontWeight: 800 }}>Customise now ↗</a><b>★</b></div>
+                  <div className="foot"><span>Choose your own vibe.</span><b>☺</b></div>
                 </article>
               </div>
             </div>
@@ -1040,7 +1040,7 @@ export default function App() {
                         <div><h2>Creative studio 🎨</h2><p>Live 3D proof visualizer and packaging dielines.</p></div>
                         <span className="status orange">1 APPROVAL NEEDED</span>
                       </div>
-                      
+
                       <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', flexWrap: 'wrap' }}>
                         {SPONSOR_CARTONS.map(c => (
                           <button
@@ -1067,7 +1067,7 @@ export default function App() {
                               Open Full Flat Wrap ↗
                             </a>
                           </div>
-                          
+
                           <div style={{ background: '#f0eee5', border: '1.5px dashed var(--ink)', padding: '16px', borderRadius: '16px' }}>
                             <InteractiveCarton3D carton={creativeCarton} scale={0.46} autoSpin={true} stageHeight={470} />
                           </div>

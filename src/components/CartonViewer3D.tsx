@@ -149,7 +149,7 @@ export function InteractiveCarton3D({
         <div
           style={{
             transformStyle: 'preserve-3d',
-            transform: `translateY(40px) scale(${scale})`
+            transform: `translateY(110px) scale(${scale})`
           }}
         >
           {/* Carton 3D Container */}
