@@ -421,16 +421,16 @@ export default function App() {
             </div>
           </section>
 
-          {/* 3D Sponsor Showcase Section */}
+          {/* 3D Showcase & Portfolio Case Studies */}
           <section id="cartons-showcase" style={{ background: '#EDEAE2', padding: '90px 0', borderTop: '2px solid var(--ink)', borderBottom: '2px solid var(--ink)' }}>
             <div className="wrap">
               <div className="section-head reveal visible">
                 <div>
-                  <div className="eyebrow">OFFICIAL SPONSOR PACKAGING · DUAL FORMAT</div>
-                  <h2>Real drops. Cartons & PET bottles.</h2>
+                  <div className="eyebrow">PORTFOLIO CASE STUDIES · DUAL FORMAT</div>
+                  <h2>This is how we make it for you.</h2>
                 </div>
                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
-                  <p style={{ margin: 0 }}>Rotate, drag, and view front, back, and side panels for active venture sponsorships. Switch between sustainable cartons and recyclable PET bottles.</p>
+                  <p style={{ margin: 0 }}>See how we turned real startup briefs into physical drops across tech, fashion, mental wellness, and creator tools. We will make yours with the exact same precision.</p>
                   <div style={{ display: 'inline-flex', background: '#fff', padding: '4px', borderRadius: '99px', border: '1.5px solid var(--ink)', boxShadow: '2px 2px 0 var(--ink)' }}>
                     <button
                       type="button"
@@ -486,7 +486,7 @@ export default function App() {
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                         <span style={{ font: "700 10px 'JetBrains Mono', monospace", background: carton.roof, color: carton.roofink, padding: '4px 8px', borderRadius: '99px', border: '1px solid var(--ink)' }}>
-                          {carton.tag} · {packFormat.toUpperCase()}
+                          {carton.id === 'custom-empty' ? 'YOUR BRAND SPOT' : 'BRAND CASE STUDY'} · {packFormat.toUpperCase()}
                         </span>
                         <a
                           href={`/cartons/carton-${carton.id === 'custom-empty' ? 'template' : carton.id}.html`}
@@ -516,17 +516,17 @@ export default function App() {
                     <div style={{ marginTop: '16px', display: 'flex', gap: '8px' }}>
                       <button
                         className="btn lime"
-                        style={{ flex: 1, padding: '10px' }}
+                        style={{ flex: 1, padding: '10px', fontSize: '12px' }}
                         onClick={() => { setActiveHeroCarton(carton); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
                       >
                         Feature in Hero ↗
                       </button>
                       <button
                         className="btn dark"
-                        style={{ padding: '10px 14px' }}
-                        onClick={() => scrollToContact(carton.name)}
+                        style={{ flex: 1.2, padding: '10px 12px', fontSize: '12px' }}
+                        onClick={() => scrollToContact(carton.id === 'custom-empty' ? 'Custom Brand' : `Make Like ${carton.name}`)}
                       >
-                        Sponsor This Drop
+                        {carton.id === 'custom-empty' ? 'Make This Mine ↗' : 'Make Mine Like This ↗'}
                       </button>
                     </div>
                   </div>
