@@ -96,17 +96,18 @@ export default function App() {
             <>
               <a href="#why" onClick={() => setMobileMenuOpen(false)}>THE IDEA</a>
               <a href="#cartons-showcase" onClick={() => setMobileMenuOpen(false)}>3D CARTONS</a>
+              <a href="#template-builder" onClick={() => setMobileMenuOpen(false)}>DESIGN STUDIO</a>
               <a href="#editions" onClick={() => setMobileMenuOpen(false)}>THE VIBES</a>
               <a href="#how" onClick={() => setMobileMenuOpen(false)}>HOW IT WORKS</a>
               <a href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
               <a
-                href="/cartons/paanipop-sponsor-cartons.html"
+                href="/cartons/carton-template.html"
                 target="_blank"
                 rel="noreferrer"
-                className="btn"
-                style={{ background: '#fff', padding: '8px 12px', fontSize: '11px', textDecoration: 'none' }}
+                className="btn lime"
+                style={{ padding: '8px 12px', fontSize: '11px', textDecoration: 'none' }}
               >
-                🖨️ PRINT DIELINES ↗
+                ✦ TEMPLATE GENERATOR ↗
               </a>
               <button
                 className="btn lime"
@@ -306,6 +307,109 @@ export default function App() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Interactive Custom Carton Template Studio: How We Make It For You */}
+          <section id="template-builder" style={{ background: '#F6F3EC', padding: '90px 0', borderBottom: '2px solid var(--ink)' }}>
+            <div className="wrap">
+              <div className="section-head reveal visible">
+                <div>
+                  <div className="eyebrow">CUSTOM PACKAGING ENGINE · HOW IT WORKS</div>
+                  <h2>This is how we make it for you.</h2>
+                </div>
+                <p>Every brand gets an exact 4-side carton dieline, custom color schemes, QR routing, and legal metrology space. Try the live template engine below.</p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: '32px', alignItems: 'center', marginTop: '20px' }}>
+                <div style={{ background: '#fff', border: '2.5px solid var(--ink)', borderRadius: '24px', padding: '32px', boxShadow: '8px 8px 0 var(--ink)' }}>
+                  <div className="pill" style={{ marginBottom: '14px' }}>
+                    <span className="dot"></span> READY-TO-PRINT DIELINE WORKFLOW
+                  </div>
+                  <h3 style={{ font: "900 32px 'Space Grotesk', sans-serif", letterSpacing: '-1px', margin: '10px 0' }}>
+                    From your brand brief to physical drops.
+                  </h3>
+                  <p style={{ fontSize: '15px', lineHeight: 1.55, color: '#444' }}>
+                    You don't need packaging engineers or printing agencies. We provide the certified FSSAI 500 ml template: you supply your message, brand colors, and campaign link, and our engine configures the full wrap with matching gable roofs.
+                  </p>
+
+                  <div style={{ display: 'grid', gap: '14px', margin: '24px 0' }}>
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                      <span style={{ font: "800 13px/1 'JetBrains Mono', monospace", background: 'var(--lime)', border: '1.5px solid var(--ink)', borderRadius: '50%', width: '28px', height: '28px', display: 'grid', placeItems: 'center', flexShrink: 0 }}>
+                        1
+                      </span>
+                      <div>
+                        <b style={{ fontSize: '14px' }}>4-Side Dieline Customization</b>
+                        <p style={{ margin: '3px 0 0', fontSize: '13px', color: '#666' }}>Front billboard hero, Side A story bullets, Back QR engagement station, and Side B brand belief.</p>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                      <span style={{ font: "800 13px/1 'JetBrains Mono', monospace", background: 'var(--pink)', border: '1.5px solid var(--ink)', borderRadius: '50%', width: '28px', height: '28px', display: 'grid', placeItems: 'center', flexShrink: 0, color: '#fff' }}>
+                        2
+                      </span>
+                      <div>
+                        <b style={{ fontSize: '14px' }}>Rotatable 3D Proof Before Printing</b>
+                        <p style={{ margin: '3px 0 0', fontSize: '13px', color: '#666' }}>Inspect your carton from any angle. Preview how the fold, gable slopes, and cap integration will look in hands.</p>
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}>
+                      <span style={{ font: "800 13px/1 'JetBrains Mono', monospace", background: 'var(--blue)', border: '1.5px solid var(--ink)', borderRadius: '50%', width: '28px', height: '28px', display: 'grid', placeItems: 'center', flexShrink: 0, color: '#fff' }}>
+                        3
+                      </span>
+                      <div>
+                        <b style={{ fontSize: '14px' }}>Instant Dieline Export to PDF</b>
+                        <p style={{ margin: '3px 0 0', fontSize: '13px', color: '#666' }}>Export the 300×760 px panel flat wrap directly to your carton printing partners with zero layout hassle.</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', paddingTop: '10px', borderTop: '1px dashed #ccc' }}>
+                    <a
+                      href="/cartons/carton-template.html"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="btn lime"
+                      style={{ textDecoration: 'none', padding: '12px 18px', fontSize: '12px' }}
+                    >
+                      OPEN FULL TEMPLATE GENERATOR ↗
+                    </a>
+                    <button
+                      className="btn dark"
+                      onClick={() => scrollToContact('Brand / advertiser')}
+                      style={{ padding: '12px 18px', fontSize: '12px' }}
+                    >
+                      REQUEST BRAND MOCKUP
+                    </button>
+                  </div>
+                </div>
+
+                {/* Live Template Preview Container */}
+                <div style={{ background: '#fff', border: '2.5px solid var(--ink)', borderRadius: '24px', padding: '24px', boxShadow: '8px 8px 0 var(--ink)', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                  <div style={{ width: '100%', display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
+                    <span style={{ font: "700 11px 'JetBrains Mono', monospace", textTransform: 'uppercase', color: 'var(--blue)' }}>
+                      ✦ LIVE 3D TEMPLATE PREVIEW
+                    </span>
+                    <a
+                      href="/cartons/carton-template.html"
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{ font: "700 11px 'DM Sans'", color: 'var(--ink)', textDecoration: 'underline' }}
+                    >
+                      Launch Full-Screen Editor ↗
+                    </a>
+                  </div>
+
+                  <div style={{ width: '100%', background: '#EDEAE2', borderRadius: '16px', border: '1.5px solid var(--ink)', padding: '12px 0' }}>
+                    <InteractiveCarton3D carton={SPONSOR_CARTONS[3]} scale={0.52} autoSpin={true} />
+                  </div>
+
+                  <div style={{ marginTop: '16px', textAlign: 'center', fontSize: '12px', color: '#666' }}>
+                    Drag to rotate · Switch views · Click <b>"Open Full Template Generator"</b> to edit your brand name, colors, and QR link live.
+                  </div>
+                </div>
               </div>
             </div>
           </section>
@@ -1258,9 +1362,18 @@ export default function App() {
             <div className="footer-links">
               <a href="#why" onClick={() => setActiveTab('site')}>The idea</a>
               <a href="#cartons-showcase" onClick={() => setActiveTab('site')}>3D cartons</a>
+              <a href="#template-builder" onClick={() => setActiveTab('site')}>Design studio</a>
               <a href="#editions" onClick={() => setActiveTab('site')}>The vibes</a>
               <a href="#brands" onClick={() => setActiveTab('site')}>For brands</a>
               <a href="#contact" onClick={() => setActiveTab('site')}>Contact</a>
+              <a
+                href="/cartons/carton-template.html"
+                target="_blank"
+                rel="noreferrer"
+                style={{ color: 'var(--lime)', textDecoration: 'none', fontWeight: 700 }}
+              >
+                ✦ Template generator ↗
+              </a>
               <a
                 href="/cartons/paanipop-sponsor-cartons.html"
                 target="_blank"
