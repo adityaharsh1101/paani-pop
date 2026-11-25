@@ -248,7 +248,7 @@ export default function App() {
               </div>
 
               {/* Real 3D Model Showcase (Carton or Bottle according to packFormat) */}
-              <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', minHeight: '600px' }}>
+              <div className="hero-art-container" style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', minHeight: '600px' }}>
                 <div className="sunburst" style={{ zIndex: 1, opacity: 0.85 }}></div>
                 <div className="star one" style={{ zIndex: 2 }}>✳</div>
                 <div className="star two" style={{ zIndex: 2 }}>✳</div>
@@ -265,6 +265,7 @@ export default function App() {
 
                 {/* Visible Side-by-Side Trio: Left (Startup), Center (This Could Be Yours / Active), Right (Startup) */}
                 <div
+                  className="hero-trio"
                   style={{
                     position: 'relative',
                     zIndex: 3,
@@ -278,6 +279,7 @@ export default function App() {
                 >
                   {/* Left Side: InfluenceOS */}
                   <div
+                    className="hero-flank-carton"
                     style={{
                       flex: '0 1 200px',
                       cursor: 'pointer',
@@ -321,6 +323,7 @@ export default function App() {
                     style={{
                       flex: '1 1 320px',
                       maxWidth: '360px',
+                      width: '100%',
                       zIndex: 4,
                       filter: 'drop-shadow(10px 14px 0 rgba(23,23,23,0.18))'
                     }}
@@ -353,6 +356,7 @@ export default function App() {
 
                   {/* Right Side: Hashlilly */}
                   <div
+                    className="hero-flank-carton"
                     style={{
                       flex: '0 1 200px',
                       cursor: 'pointer',
@@ -599,7 +603,7 @@ export default function App() {
               </div>
 
               {/* Side-by-Side Dual Pricing Cards: Plastic Bottle vs Carton */}
-              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '28px' }}>
+              <div className="pricing-dual-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '28px' }}>
                 {/* 1. Recyclable PET Bottle Card */}
                 <div style={{ border: '2.5px solid var(--ink)', borderRadius: '24px', padding: '30px', background: '#F4F8FF', boxShadow: '8px 8px 0 var(--ink)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                   <div>
@@ -770,7 +774,7 @@ export default function App() {
                 <p>Every brand gets an exact 4-side carton dieline, custom color schemes, QR routing, and legal metrology space. Try the live template engine below.</p>
               </div>
 
-              <div style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: '32px', alignItems: 'center', marginTop: '20px' }}>
+              <div className="template-studio-grid" style={{ display: 'grid', gridTemplateColumns: '1.05fr 0.95fr', gap: '32px', alignItems: 'center', marginTop: '20px' }}>
                 <div style={{ background: '#fff', border: '2.5px solid var(--ink)', borderRadius: '24px', padding: '32px', boxShadow: '8px 8px 0 var(--ink)' }}>
                   <div className="pill" style={{ marginBottom: '14px' }}>
                     <span className="dot"></span> READY-TO-PRINT DIELINE WORKFLOW
