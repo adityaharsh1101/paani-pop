@@ -2,8 +2,10 @@ import { useState, useMemo } from 'react';
 import { Search, X } from 'lucide-react';
 import { initialCampaigns, type Campaign, money } from './data';
 import { SPONSOR_CARTONS, InteractiveCarton3D, type SponsorCartonData } from './components/CartonViewer3D';
+import { BottleViewer3D } from './components/BottleViewer3D';
 
 type Mode = 'brand' | 'ops';
+type PackFormat = 'carton' | 'bottle';
 
 export default function App() {
   const [activeTab, setActiveTab] = useState<'site' | 'portal'>('site');
@@ -12,10 +14,16 @@ export default function App() {
   const [opsPage, setOpsPage] = useState('overview');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  // Hero active carton
+  // Packaging Format Selection: 'carton' (Tetra Pak / Paperboard) vs 'bottle' (100% Recyclable PET)
+  const [packFormat, setPackFormat] = useState<PackFormat>('carton');
+
+  // Hero active carton/bottle
   const [activeHeroCarton, setActiveHeroCarton] = useState<SponsorCartonData>(SPONSOR_CARTONS[0]); // Hashlilly
   // Creative studio active carton
   const [creativeCarton, setCreativeCarton] = useState<SponsorCartonData>(SPONSOR_CARTONS[0]);
+
+  // Pricing calculator batch selector: 1000, 2400 (MOQ), 10000
+  const [pricingQty, setPricingQty] = useState<number>(2400);
 
   // Landing page form state
   const [leadName, setLeadName] = useState('');
@@ -95,7 +103,8 @@ export default function App() {
           {activeTab === 'site' ? (
             <>
               <a href="#why" onClick={() => setMobileMenuOpen(false)}>THE IDEA</a>
-              <a href="#cartons-showcase" onClick={() => setMobileMenuOpen(false)}>3D CARTONS</a>
+              <a href="#cartons-showcase" onClick={() => setMobileMenuOpen(false)}>3D MODELS</a>
+              <a href="#pricing-calculator" onClick={() => setMobileMenuOpen(false)}>RATE CARD & COSTS</a>
               <a href="#template-builder" onClick={() => setMobileMenuOpen(false)}>DESIGN STUDIO</a>
               <a href="#editions" onClick={() => setMobileMenuOpen(false)}>THE VIBES</a>
               <a href="#how" onClick={() => setMobileMenuOpen(false)}>HOW IT WORKS</a>
@@ -157,10 +166,62 @@ export default function App() {
                 </div>
                 <div className="micro">500 ML OF HYDRATION. 100% LESS BORING. REAL 3D PACKAGING BELOW.</div>
 
+                {/* Format Switcher: Paperboard Carton vs Recyclable PET Bottle */}
+                <div style={{ marginTop: '22px', background: '#EDEAE2', padding: '14px 18px', borderRadius: '18px', border: '1.5px solid var(--ink)', boxShadow: '3px 3px 0 var(--ink)' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                    <span style={{ font: "800 11px 'DM Mono', monospace", color: 'var(--ink)', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                      PACKAGING FORMAT:
+                    </span>
+                    <span style={{ font: "700 10px 'JetBrains Mono', monospace", background: packFormat === 'bottle' ? 'var(--blue)' : 'var(--lime)', color: packFormat === 'bottle' ? '#fff' : 'var(--ink)', padding: '3px 8px', borderRadius: '99px', border: '1px solid var(--ink)' }}>
+                      {packFormat === 'bottle' ? 'PET BOTTLE (₹13.50/u)' : 'PAPER CARTON (₹18.00/u)'}
+                    </span>
+                  </div>
+                  <div style={{ display: 'flex', gap: '8px' }}>
+                    <button
+                      type="button"
+                      style={{
+                        flex: 1,
+                        border: '2px solid var(--ink)',
+                        background: packFormat === 'carton' ? 'var(--ink)' : '#fff',
+                        color: packFormat === 'carton' ? '#fff' : 'var(--ink)',
+                        padding: '10px 14px',
+                        borderRadius: '12px',
+                        fontSize: '12px',
+                        fontWeight: 800,
+                        cursor: 'pointer',
+                        boxShadow: packFormat === 'carton' ? 'inset 0 2px 4px rgba(0,0,0,0.3)' : '2px 2px 0 var(--ink)',
+                        transition: 'all 0.15s'
+                      }}
+                      onClick={() => setPackFormat('carton')}
+                    >
+                      📦 500 ML CARTON
+                    </button>
+                    <button
+                      type="button"
+                      style={{
+                        flex: 1,
+                        border: '2px solid var(--ink)',
+                        background: packFormat === 'bottle' ? 'var(--blue)' : '#fff',
+                        color: packFormat === 'bottle' ? '#fff' : 'var(--ink)',
+                        padding: '10px 14px',
+                        borderRadius: '12px',
+                        fontSize: '12px',
+                        fontWeight: 800,
+                        cursor: 'pointer',
+                        boxShadow: packFormat === 'bottle' ? 'inset 0 2px 4px rgba(0,0,0,0.3)' : '2px 2px 0 var(--ink)',
+                        transition: 'all 0.15s'
+                      }}
+                      onClick={() => setPackFormat('bottle')}
+                    >
+                      🍾 500 ML PET BOTTLE
+                    </button>
+                  </div>
+                </div>
+
                 {/* Brand Selector for Hero 3D Carton */}
-                <div style={{ marginTop: '22px' }}>
+                <div style={{ marginTop: '18px' }}>
                   <span style={{ font: "700 11px 'DM Mono', monospace", color: '#555', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
-                    EXPLORE REAL SPONSOR CARTON:
+                    EXPLORE REAL SPONSOR DESIGN:
                   </span>
                   <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '8px' }}>
                     {SPONSOR_CARTONS.map(sc => (
@@ -186,14 +247,20 @@ export default function App() {
                 </div>
               </div>
 
-              {/* Real 3D Carton Showcase: 2-3 startup bottles + 1 empty "This could be yours" */}
+              {/* Real 3D Model Showcase (Carton or Bottle according to packFormat) */}
               <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center', width: '100%', minHeight: '600px' }}>
                 <div className="sunburst" style={{ zIndex: 1, opacity: 0.85 }}></div>
                 <div className="star one" style={{ zIndex: 2 }}>✳</div>
                 <div className="star two" style={{ zIndex: 2 }}>✳</div>
-                <div className="tape" style={{ zIndex: 5, top: '-25px', left: '10px' }}>3D REAL SPONSOR DROPS · DRAG TO ROTATE</div>
+                <div className="tape" style={{ zIndex: 5, top: '-25px', left: '10px' }}>
+                  {packFormat === 'bottle' ? '3D REAL PET BOTTLE · DRAG TO ROTATE' : '3D REAL SPONSOR CARTON · DRAG TO ROTATE'}
+                </div>
                 <div className="burst-note" style={{ zIndex: 5, right: '0px', bottom: '0px' }}>
-                  SPONSORED<br />BY REAL<br />BRANDS ✳
+                  {packFormat === 'bottle' ? (
+                    <>RECYCLABLE<br />PET BOTTLE<br />EDITION ✳</>
+                  ) : (
+                    <>SPONSORED<br />BY REAL<br />BRANDS ✳</>
+                  )}
                 </div>
 
                 {/* Visible Side-by-Side Trio: Left (Startup), Center (This Could Be Yours / Active), Right (Startup) */}
@@ -209,7 +276,7 @@ export default function App() {
                     marginTop: '20px'
                   }}
                 >
-                  {/* Left Side Carton: InfluenceOS */}
+                  {/* Left Side: InfluenceOS */}
                   <div
                     style={{
                       flex: '0 1 200px',
@@ -227,18 +294,29 @@ export default function App() {
                       {(SPONSOR_CARTONS[2] || SPONSOR_CARTONS[1]).name.toUpperCase()}
                     </div>
                     <div style={{ width: '100%', pointerEvents: 'none' }}>
-                      <InteractiveCarton3D
-                        carton={SPONSOR_CARTONS[2] || SPONSOR_CARTONS[1]}
-                        scale={0.30}
-                        autoSpin={true}
-                        hideControls={true}
-                        stageHeight={340}
-                        translateYOffset={0}
-                      />
+                      {packFormat === 'bottle' ? (
+                        <BottleViewer3D
+                          carton={SPONSOR_CARTONS[2] || SPONSOR_CARTONS[1]}
+                          scale={0.34}
+                          autoSpin={true}
+                          hideControls={true}
+                          stageHeight={340}
+                          translateYOffset={0}
+                        />
+                      ) : (
+                        <InteractiveCarton3D
+                          carton={SPONSOR_CARTONS[2] || SPONSOR_CARTONS[1]}
+                          scale={0.30}
+                          autoSpin={true}
+                          hideControls={true}
+                          stageHeight={340}
+                          translateYOffset={0}
+                        />
+                      )}
                     </div>
                   </div>
 
-                  {/* Center Feature Carton: THIS COULD BE YOURS! (or selected startup) */}
+                  {/* Center Feature Model: THIS COULD BE YOURS! (or selected startup) */}
                   <div
                     style={{
                       flex: '1 1 320px',
@@ -248,21 +326,32 @@ export default function App() {
                     }}
                   >
                     <div style={{ textAlign: 'center', marginBottom: '14px', position: 'relative', zIndex: 10 }}>
-                      <span style={{ font: "800 11px 'DM Mono', monospace", background: 'var(--lime)', border: '1.5px solid var(--ink)', color: 'var(--ink)', padding: '6px 14px', borderRadius: '99px', boxShadow: '2px 2px 0 var(--ink)', display: 'inline-block', whiteSpace: 'nowrap' }}>
-                        ✦ {activeHeroCarton.id === 'custom-empty' ? 'THIS COULD BE YOURS! (CUSTOM SPONSOR SPOT)' : `${activeHeroCarton.name.toUpperCase()} · OFFICIAL DROP`}
+                      <span style={{ font: "800 11px 'DM Mono', monospace", background: packFormat === 'bottle' ? 'var(--blue)' : 'var(--lime)', border: '1.5px solid var(--ink)', color: packFormat === 'bottle' ? '#fff' : 'var(--ink)', padding: '6px 14px', borderRadius: '99px', boxShadow: '2px 2px 0 var(--ink)', display: 'inline-block', whiteSpace: 'nowrap' }}>
+                        ✦ {activeHeroCarton.id === 'custom-empty' ? `THIS COULD BE YOURS! (${packFormat.toUpperCase()} SPOT)` : `${activeHeroCarton.name.toUpperCase()} · ${packFormat.toUpperCase()} DROP`}
                       </span>
                     </div>
-                    <InteractiveCarton3D
-                      carton={activeHeroCarton}
-                      scale={0.36}
-                      autoSpin={false}
-                      hideControls={false}
-                      stageHeight={420}
-                      translateYOffset={0}
-                    />
+                    {packFormat === 'bottle' ? (
+                      <BottleViewer3D
+                        carton={activeHeroCarton}
+                        scale={0.46}
+                        autoSpin={false}
+                        hideControls={false}
+                        stageHeight={420}
+                        translateYOffset={0}
+                      />
+                    ) : (
+                      <InteractiveCarton3D
+                        carton={activeHeroCarton}
+                        scale={0.36}
+                        autoSpin={false}
+                        hideControls={false}
+                        stageHeight={420}
+                        translateYOffset={0}
+                      />
+                    )}
                   </div>
 
-                  {/* Right Side Carton: Hashlilly */}
+                  {/* Right Side: Hashlilly */}
                   <div
                     style={{
                       flex: '0 1 200px',
@@ -280,14 +369,25 @@ export default function App() {
                       {(SPONSOR_CARTONS[6] || SPONSOR_CARTONS[1]).name.toUpperCase()}
                     </div>
                     <div style={{ width: '100%', pointerEvents: 'none' }}>
-                      <InteractiveCarton3D
-                        carton={SPONSOR_CARTONS[6] || SPONSOR_CARTONS[1]}
-                        scale={0.30}
-                        autoSpin={true}
-                        hideControls={true}
-                        stageHeight={340}
-                        translateYOffset={0}
-                      />
+                      {packFormat === 'bottle' ? (
+                        <BottleViewer3D
+                          carton={SPONSOR_CARTONS[6] || SPONSOR_CARTONS[1]}
+                          scale={0.34}
+                          autoSpin={true}
+                          hideControls={true}
+                          stageHeight={340}
+                          translateYOffset={0}
+                        />
+                      ) : (
+                        <InteractiveCarton3D
+                          carton={SPONSOR_CARTONS[6] || SPONSOR_CARTONS[1]}
+                          scale={0.30}
+                          autoSpin={true}
+                          hideControls={true}
+                          stageHeight={340}
+                          translateYOffset={0}
+                        />
+                      )}
                     </div>
                   </div>
                 </div>
@@ -326,10 +426,46 @@ export default function App() {
             <div className="wrap">
               <div className="section-head reveal visible">
                 <div>
-                  <div className="eyebrow">OFFICIAL SPONSOR PACKAGING</div>
-                  <h2>Real drops. Real 3D cartons.</h2>
+                  <div className="eyebrow">OFFICIAL SPONSOR PACKAGING · DUAL FORMAT</div>
+                  <h2>Real drops. Cartons & PET bottles.</h2>
                 </div>
-                <p>Rotate, drag, and view front, back, and side panels for active venture sponsorships. Includes print-ready dielines.</p>
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-end', gap: '8px' }}>
+                  <p style={{ margin: 0 }}>Rotate, drag, and view front, back, and side panels for active venture sponsorships. Switch between sustainable cartons and recyclable PET bottles.</p>
+                  <div style={{ display: 'inline-flex', background: '#fff', padding: '4px', borderRadius: '99px', border: '1.5px solid var(--ink)', boxShadow: '2px 2px 0 var(--ink)' }}>
+                    <button
+                      type="button"
+                      style={{
+                        padding: '6px 14px',
+                        borderRadius: '99px',
+                        border: 'none',
+                        background: packFormat === 'carton' ? 'var(--ink)' : 'transparent',
+                        color: packFormat === 'carton' ? '#fff' : 'var(--ink)',
+                        fontSize: '11px',
+                        fontWeight: 800,
+                        cursor: 'pointer'
+                      }}
+                      onClick={() => setPackFormat('carton')}
+                    >
+                      📦 Cartons
+                    </button>
+                    <button
+                      type="button"
+                      style={{
+                        padding: '6px 14px',
+                        borderRadius: '99px',
+                        border: 'none',
+                        background: packFormat === 'bottle' ? 'var(--blue)' : 'transparent',
+                        color: packFormat === 'bottle' ? '#fff' : 'var(--ink)',
+                        fontSize: '11px',
+                        fontWeight: 800,
+                        cursor: 'pointer'
+                      }}
+                      onClick={() => setPackFormat('bottle')}
+                    >
+                      🍾 PET Bottles
+                    </button>
+                  </div>
+                </div>
               </div>
 
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', marginTop: '30px' }}>
@@ -350,7 +486,7 @@ export default function App() {
                     <div>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
                         <span style={{ font: "700 10px 'JetBrains Mono', monospace", background: carton.roof, color: carton.roofink, padding: '4px 8px', borderRadius: '99px', border: '1px solid var(--ink)' }}>
-                          {carton.tag}
+                          {carton.tag} · {packFormat.toUpperCase()}
                         </span>
                         <a
                           href={`/cartons/carton-${carton.id === 'custom-empty' ? 'template' : carton.id}.html`}
@@ -370,7 +506,11 @@ export default function App() {
                     </div>
 
                     <div style={{ background: '#F6F3EC', border: '1.5px solid var(--ink)', borderRadius: '16px', overflow: 'hidden', padding: '10px 0' }}>
-                      <InteractiveCarton3D carton={carton} scale={0.36} autoSpin={false} stageHeight={410} translateYOffset={0} />
+                      {packFormat === 'bottle' ? (
+                        <BottleViewer3D carton={carton} scale={0.46} autoSpin={false} stageHeight={410} translateYOffset={0} />
+                      ) : (
+                        <InteractiveCarton3D carton={carton} scale={0.36} autoSpin={false} stageHeight={410} translateYOffset={0} />
+                      )}
                     </div>
 
                     <div style={{ marginTop: '16px', display: 'flex', gap: '8px' }}>
@@ -391,6 +531,230 @@ export default function App() {
                     </div>
                   </div>
                 ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Pricing & Cost Transparency Section (Priced As Per Their Exact Cost) */}
+          <section id="pricing-calculator" style={{ background: '#fff', padding: '90px 0', borderBottom: '2px solid var(--ink)' }}>
+            <div className="wrap">
+              <div className="section-head reveal visible">
+                <div>
+                  <div className="eyebrow">TRANSPARENT ECONOMICS & SPONSOR RATE CARD</div>
+                  <h2>Priced as per their cost. Exactly.</h2>
+                </div>
+                <p>We believe in radical clarity. Water bottles and paperboard cartons have fundamentally different production economics, procurement MOQs, and logistics. See the breakdown below.</p>
+              </div>
+
+              {/* Package Batch Size Selector */}
+              <div style={{ display: 'flex', gap: '10px', flexWrap: 'wrap', marginBottom: '28px' }}>
+                <button
+                  type="button"
+                  style={{
+                    padding: '10px 18px',
+                    borderRadius: '99px',
+                    border: '2px solid var(--ink)',
+                    background: pricingQty === 1000 ? 'var(--ink)' : '#fff',
+                    color: pricingQty === 1000 ? '#fff' : 'var(--ink)',
+                    fontWeight: 800,
+                    fontSize: '13px',
+                    boxShadow: pricingQty === 1000 ? 'inset 0 2px 4px rgba(0,0,0,0.3)' : '3px 3px 0 var(--ink)'
+                  }}
+                  onClick={() => setPricingQty(1000)}
+                >
+                  ⚡ 1,000 UNITS (Micro-Drop)
+                </button>
+                <button
+                  type="button"
+                  style={{
+                    padding: '10px 18px',
+                    borderRadius: '99px',
+                    border: '2px solid var(--ink)',
+                    background: pricingQty === 2400 ? 'var(--lime)' : '#fff',
+                    color: 'var(--ink)',
+                    fontWeight: 800,
+                    fontSize: '13px',
+                    boxShadow: pricingQty === 2400 ? 'inset 0 2px 4px rgba(0,0,0,0.3)' : '3px 3px 0 var(--ink)'
+                  }}
+                  onClick={() => setPricingQty(2400)}
+                >
+                  ★ 2,400 UNITS (Custom Label MOQ · Recommended)
+                </button>
+                <button
+                  type="button"
+                  style={{
+                    padding: '10px 18px',
+                    borderRadius: '99px',
+                    border: '2px solid var(--ink)',
+                    background: pricingQty === 10000 ? 'var(--blue)' : '#fff',
+                    color: pricingQty === 10000 ? '#fff' : 'var(--ink)',
+                    fontWeight: 800,
+                    fontSize: '13px',
+                    boxShadow: pricingQty === 10000 ? 'inset 0 2px 4px rgba(0,0,0,0.3)' : '3px 3px 0 var(--ink)'
+                  }}
+                  onClick={() => setPricingQty(10000)}
+                >
+                  🚀 10,000 UNITS (Enterprise City Takeover)
+                </button>
+              </div>
+
+              {/* Side-by-Side Dual Pricing Cards: Plastic Bottle vs Carton */}
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '28px' }}>
+                {/* 1. Recyclable PET Bottle Card */}
+                <div style={{ border: '2.5px solid var(--ink)', borderRadius: '24px', padding: '30px', background: '#F4F8FF', boxShadow: '8px 8px 0 var(--ink)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span className="pill" style={{ background: 'var(--blue)', color: '#fff', border: '1.5px solid var(--ink)' }}>
+                        🍾 500 ML RECYCLABLE PET BOTTLE
+                      </span>
+                      <span style={{ font: "700 11px 'DM Mono', monospace", color: '#555' }}>
+                        MOQ: 2,400 UNITS
+                      </span>
+                    </div>
+
+                    <div style={{ margin: '20px 0 12px' }}>
+                      <span style={{ fontSize: '13px', color: '#666', fontWeight: 700 }}>SPONSOR FEE PER BOTTLE</span>
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+                        <span style={{ font: "900 48px/1 'Space Grotesk', sans-serif", letterSpacing: '-2px' }}>
+                          ₹{pricingQty === 1000 ? '15.00' : pricingQty === 2400 ? '14.00' : '13.50'}
+                        </span>
+                        <span style={{ font: "700 14px 'DM Mono', monospace", color: '#666' }}>/ bottle</span>
+                      </div>
+                      <p style={{ margin: '6px 0 0', fontSize: '12px', color: '#555' }}>
+                        + ₹{pricingQty === 1000 ? '2,500' : pricingQty === 2400 ? '3,500' : '5,000'} plate setup fee · Total: ₹{pricingQty === 1000 ? '17,500' : pricingQty === 2400 ? '37,100' : '1,40,000'}
+                      </p>
+                    </div>
+
+                    <div style={{ borderTop: '1.5px dashed var(--ink)', paddingTop: '16px', marginTop: '16px' }}>
+                      <span style={{ font: "800 11px 'DM Mono', monospace", color: 'var(--blue)', textTransform: 'uppercase' }}>
+                        EXACT COST BREAKDOWN (AT ₹6.50 BASE PROCUREMENT):
+                      </span>
+                      <ul style={{ listStyle: 'none', padding: 0, margin: '10px 0', fontSize: '13px', display: 'grid', gap: '8px' }}>
+                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span>Bottle Procurement (500 ml filled & sealed)</span>
+                          <b>₹{pricingQty === 1000 ? '6,500' : pricingQty === 2400 ? '15,600' : '65,000'}</b>
+                        </li>
+                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span>Corrugated Outer Cartons & Secondary Packing</span>
+                          <b>₹{pricingQty === 1000 ? '250' : pricingQty === 2400 ? '600' : '2,500'}</b>
+                        </li>
+                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span>QC Rejects & Transit Damage Reserve (2%)</span>
+                          <b>₹{pricingQty === 1000 ? '135' : pricingQty === 2400 ? '324' : '1,350'}</b>
+                        </li>
+                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span>Commercial Logistics & Tata Ace Dispatch</span>
+                          <b>₹{pricingQty === 1000 ? '2,500' : pricingQty === 2400 ? '4,500' : '10,000'}</b>
+                        </li>
+                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span>Event Runners & Unloading Handlers</span>
+                          <b>₹{pricingQty === 1000 ? '1,500' : pricingQty === 2400 ? '3,000' : '28,300'}</b>
+                        </li>
+                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span>Creative Coordination & FSSAI Compliance</span>
+                          <b>₹{pricingQty === 1000 ? '1,000' : pricingQty === 2400 ? '1,500' : '2,000'}</b>
+                        </li>
+                        <li style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #c8d8f0', paddingTop: '6px', fontWeight: 800 }}>
+                          <span>Total Unit Operating Cost</span>
+                          <span style={{ color: 'var(--blue)' }}>
+                            ₹{pricingQty === 1000 ? '11.88' : pricingQty === 2400 ? '10.63' : '10.91'}/u
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div style={{ marginTop: '20px' }}>
+                    <div style={{ background: '#fff', padding: '12px', borderRadius: '12px', border: '1px solid var(--ink)', marginBottom: '14px', fontSize: '12px' }}>
+                      💡 <b>Best for:</b> High-volume sports tournaments, tech summits, outdoor campus festivals, and mass lead generation with fast 7-day turnaround.
+                    </div>
+                    <button
+                      className="btn blue"
+                      style={{ width: '100%', padding: '14px' }}
+                      onClick={() => scrollToContact(`500 ml PET Bottle (${pricingQty} units)`)}
+                    >
+                      ORDER PET BOTTLE DROP ↗
+                    </button>
+                  </div>
+                </div>
+
+                {/* 2. Paperboard Gable-Top Carton Card */}
+                <div style={{ border: '2.5px solid var(--ink)', borderRadius: '24px', padding: '30px', background: '#F8F6EF', boxShadow: '8px 8px 0 var(--ink)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                  <div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                      <span className="pill" style={{ background: 'var(--lime)', color: 'var(--ink)', border: '1.5px solid var(--ink)' }}>
+                        📦 500 ML PAPERBOARD CARTON
+                      </span>
+                      <span style={{ font: "700 11px 'DM Mono', monospace", color: '#555' }}>
+                        MOQ: 5,000 UNITS
+                      </span>
+                    </div>
+
+                    <div style={{ margin: '20px 0 12px' }}>
+                      <span style={{ fontSize: '13px', color: '#666', fontWeight: 700 }}>SPONSOR FEE PER CARTON</span>
+                      <div style={{ display: 'flex', alignItems: 'baseline', gap: '6px' }}>
+                        <span style={{ font: "900 48px/1 'Space Grotesk', sans-serif", letterSpacing: '-2px' }}>
+                          ₹{pricingQty === 1000 ? '22.00' : pricingQty === 2400 ? '19.50' : '18.00'}
+                        </span>
+                        <span style={{ font: "700 14px 'DM Mono', monospace", color: '#666' }}>/ carton</span>
+                      </div>
+                      <p style={{ margin: '6px 0 0', fontSize: '12px', color: '#555' }}>
+                        + ₹{pricingQty === 1000 ? '4,000' : pricingQty === 2400 ? '5,000' : '7,500'} die plate fee · Total: ₹{pricingQty === 1000 ? '26,000' : pricingQty === 2400 ? '51,800' : '1,87,500'}
+                      </p>
+                    </div>
+
+                    <div style={{ borderTop: '1.5px dashed var(--ink)', paddingTop: '16px', marginTop: '16px' }}>
+                      <span style={{ font: "800 11px 'DM Mono', monospace", color: '#886000', textTransform: 'uppercase' }}>
+                        EXACT COST BREAKDOWN (AT ₹10.50 BASE CARTON PROCUREMENT):
+                      </span>
+                      <ul style={{ listStyle: 'none', padding: 0, margin: '10px 0', fontSize: '13px', display: 'grid', gap: '8px' }}>
+                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span>Aseptic Carton Laminate & Specialized Filling</span>
+                          <b>₹{pricingQty === 1000 ? '10,500' : pricingQty === 2400 ? '25,200' : '1,05,000'}</b>
+                        </li>
+                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span>FSC-Certified Board & 4-Side Offset Coating</span>
+                          <b>₹{pricingQty === 1000 ? '1,200' : pricingQty === 2400 ? '2,800' : '11,000'}</b>
+                        </li>
+                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span>Damage & Pressure Seal Reserve (3%)</span>
+                          <b>₹{pricingQty === 1000 ? '350' : pricingQty === 2400 ? '840' : '3,500'}</b>
+                        </li>
+                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span>Climate-Controlled Courier & Direct Freight</span>
+                          <b>₹{pricingQty === 1000 ? '3,500' : pricingQty === 2400 ? '6,500' : '15,000'}</b>
+                        </li>
+                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span>Event Runners & Unloading Handlers</span>
+                          <b>₹{pricingQty === 1000 ? '1,500' : pricingQty === 2400 ? '3,000' : '28,300'}</b>
+                        </li>
+                        <li style={{ display: 'flex', justifyContent: 'space-between' }}>
+                          <span>Dieline Proofing & FSSAI Verification</span>
+                          <b>₹{pricingQty === 1000 ? '1,500' : pricingQty === 2400 ? '2,000' : '3,000'}</b>
+                        </li>
+                        <li style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #ded9cb', paddingTop: '6px', fontWeight: 800 }}>
+                          <span>Total Unit Operating Cost</span>
+                          <span style={{ color: 'var(--ink)' }}>
+                            ₹{pricingQty === 1000 ? '18.55' : pricingQty === 2400 ? '16.80' : '16.58'}/u
+                          </span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div style={{ marginTop: '20px' }}>
+                    <div style={{ background: '#fff', padding: '12px', borderRadius: '12px', border: '1px solid var(--ink)', marginBottom: '14px', fontSize: '12px' }}>
+                      🌿 <b>Best for:</b> Luxury boutique weddings, ESG conferences, VIP lounges, design-forward brands, and eco-conscious brand statements.
+                    </div>
+                    <button
+                      className="btn lime"
+                      style={{ width: '100%', padding: '14px' }}
+                      onClick={() => scrollToContact(`500 ml Paperboard Carton (${pricingQty} units)`)}
+                    >
+                      ORDER CARTON DROP ↗
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </section>
