@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react';
 import { Search, X } from 'lucide-react';
 import { initialCampaigns, type Campaign, money } from './data';
+import { SPONSOR_CARTONS, InteractiveCarton3D, type SponsorCartonData } from './components/CartonViewer3D';
 
 type Mode = 'brand' | 'ops';
 
@@ -11,6 +12,11 @@ export default function App() {
   const [opsPage, setOpsPage] = useState('overview');
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
+  // Hero active carton
+  const [activeHeroCarton, setActiveHeroCarton] = useState<SponsorCartonData>(SPONSOR_CARTONS[0]); // Hashlilly
+  // Creative studio active carton
+  const [creativeCarton, setCreativeCarton] = useState<SponsorCartonData>(SPONSOR_CARTONS[0]);
+
   // Landing page form state
   const [leadName, setLeadName] = useState('');
   const [leadEmail, setLeadEmail] = useState('');
@@ -89,9 +95,19 @@ export default function App() {
           {activeTab === 'site' ? (
             <>
               <a href="#why" onClick={() => setMobileMenuOpen(false)}>THE IDEA</a>
+              <a href="#cartons-showcase" onClick={() => setMobileMenuOpen(false)}>3D CARTONS</a>
               <a href="#editions" onClick={() => setMobileMenuOpen(false)}>THE VIBES</a>
               <a href="#how" onClick={() => setMobileMenuOpen(false)}>HOW IT WORKS</a>
               <a href="#faq" onClick={() => setMobileMenuOpen(false)}>FAQ</a>
+              <a
+                href="/cartons/paanipop-sponsor-cartons.html"
+                target="_blank"
+                rel="noreferrer"
+                className="btn"
+                style={{ background: '#fff', padding: '8px 12px', fontSize: '11px', textDecoration: 'none' }}
+              >
+                🖨️ PRINT DIELINES ↗
+              </a>
               <button
                 className="btn lime"
                 style={{ padding: '9px 15px', fontSize: '11px' }}
@@ -135,7 +151,7 @@ export default function App() {
       {/* Main Content Area */}
       {activeTab === 'site' ? (
         <main id="top">
-          {/* Hero Section */}
+          {/* Hero Section with Interactive 3D Sponsor Carton */}
           <section className="hero wrap">
             <div className="hero-grid">
               <div>
@@ -147,36 +163,49 @@ export default function App() {
                   <button className="btn lime" onClick={() => scrollToContact('Venue / event organiser')}>I HAVE A VENUE ↗</button>
                   <button className="btn" style={{ background: '#fff' }} onClick={() => setActiveTab('portal')}>OPEN DASHBOARD PLAYGROUND ⚡</button>
                 </div>
-                <div className="micro">500 ML OF HYDRATION. 100% LESS BORING.</div>
+                <div className="micro">500 ML OF HYDRATION. 100% LESS BORING. REAL 3D PACKAGING BELOW.</div>
+                
+                {/* Brand Selector for Hero 3D Carton */}
+                <div style={{ marginTop: '22px' }}>
+                  <span style={{ font: "700 11px 'DM Mono', monospace", color: '#555', textTransform: 'uppercase', letterSpacing: '0.08em' }}>
+                    EXPLORE REAL SPONSOR CARTON:
+                  </span>
+                  <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap', marginTop: '8px' }}>
+                    {SPONSOR_CARTONS.map(sc => (
+                      <button
+                        key={sc.id}
+                        type="button"
+                        style={{
+                          border: '1.5px solid var(--ink)',
+                          background: activeHeroCarton.id === sc.id ? 'var(--ink)' : '#fff',
+                          color: activeHeroCarton.id === sc.id ? '#fff' : 'var(--ink)',
+                          padding: '6px 12px',
+                          borderRadius: '99px',
+                          fontSize: '11px',
+                          fontWeight: 700,
+                          cursor: 'pointer'
+                        }}
+                        onClick={() => setActiveHeroCarton(sc)}
+                      >
+                        {sc.name}
+                      </button>
+                    ))}
+                  </div>
+                </div>
               </div>
-              <div className="hero-art" aria-label="Illustration of colourful PAANI POP water cartons">
-                <div className="sunburst"></div>
-                <div className="star one">✳</div>
-                <div className="star two">✳</div>
-                <div className="carton pinkbox">
-                  <div className="roof"></div>
-                  <div className="body"></div>
-                  <div className="brand">PAANI<br />POP!</div>
-                  <div className="smile">☺</div>
-                  <div className="flavour">GOOD VIBES ONLY</div>
+
+              {/* Real 3D Carton Stage replacing flat cartoon */}
+              <div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                <div className="sunburst" style={{ zIndex: 1, opacity: 0.7 }}></div>
+                <div className="star one" style={{ zIndex: 2 }}>✳</div>
+                <div className="tape" style={{ zIndex: 4, top: '10px', left: '10px' }}>3D INTERACTIVE CARTOON · DRAG ME</div>
+                <div className="burst-note" style={{ zIndex: 4, right: '-10px', bottom: '20px' }}>
+                  SPONSORED<br />BY {activeHeroCarton.name.toUpperCase()} ✳
                 </div>
-                <div className="carton orangebox">
-                  <div className="roof"></div>
-                  <div className="body"></div>
-                  <div className="brand">PAANI<br />POP!</div>
-                  <div className="smile">✳</div>
-                  <div className="flavour">ZERO BORING</div>
+                
+                <div style={{ position: 'relative', zIndex: 3, width: '100%', maxWidth: '380px' }}>
+                  <InteractiveCarton3D carton={activeHeroCarton} scale={0.55} autoSpin={true} />
                 </div>
-                <div className="carton">
-                  <div className="cap"></div>
-                  <div className="roof"></div>
-                  <div className="body"></div>
-                  <div className="brand">PAANI<br />POP!</div>
-                  <div className="smile">☺</div>
-                  <div className="flavour">FREE WATER CLUB / 500 ML</div>
-                </div>
-                <div className="tape">NOT YOUR USUAL WATER.</div>
-                <div className="burst-note">SPONSORED<br />BY GOOD<br />PEOPLE ✳</div>
               </div>
             </div>
           </section>
@@ -207,6 +236,80 @@ export default function App() {
             </div>
           </section>
 
+          {/* 3D Sponsor Showcase Section */}
+          <section id="cartons-showcase" style={{ background: '#EDEAE2', padding: '90px 0', borderTop: '2px solid var(--ink)', borderBottom: '2px solid var(--ink)' }}>
+            <div className="wrap">
+              <div className="section-head reveal visible">
+                <div>
+                  <div className="eyebrow">OFFICIAL SPONSOR PACKAGING</div>
+                  <h2>Real drops. Real 3D cartons.</h2>
+                </div>
+                <p>Rotate, drag, and view front, back, and side panels for active venture sponsorships. Includes print-ready dielines.</p>
+              </div>
+
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px', marginTop: '30px' }}>
+                {SPONSOR_CARTONS.map(carton => (
+                  <div
+                    key={carton.id}
+                    style={{
+                      background: '#fff',
+                      border: '2.5px solid var(--ink)',
+                      borderRadius: '24px',
+                      padding: '22px 18px',
+                      boxShadow: '6px 6px 0 var(--ink)',
+                      display: 'flex',
+                      flexDirection: 'column',
+                      justifyContent: 'space-between'
+                    }}
+                  >
+                    <div>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
+                        <span style={{ font: "700 10px 'JetBrains Mono', monospace", background: carton.roofColor, color: carton.roofInk, padding: '4px 8px', borderRadius: '99px' }}>
+                          {carton.badgeText}
+                        </span>
+                        <a
+                          href={`/cartons/carton-${carton.id}.html`}
+                          target="_blank"
+                          rel="noreferrer"
+                          style={{ font: "700 11px 'DM Sans', sans-serif", color: 'var(--blue)', textDecoration: 'none' }}
+                        >
+                          Flat Dieline ↗
+                        </a>
+                      </div>
+                      <h3 style={{ font: "900 28px 'Space Grotesk', sans-serif", margin: '6px 0 4px', letterSpacing: '-0.8px' }}>
+                        {carton.name}
+                      </h3>
+                      <p style={{ fontSize: '13px', color: '#555', margin: '0 0 14px', lineHeight: 1.4 }}>
+                        {carton.tagline}
+                      </p>
+                    </div>
+
+                    <div style={{ background: '#F6F3EC', border: '1.5px solid var(--ink)', borderRadius: '16px', overflow: 'hidden', padding: '10px 0' }}>
+                      <InteractiveCarton3D carton={carton} scale={0.48} autoSpin={false} />
+                    </div>
+
+                    <div style={{ marginTop: '16px', display: 'flex', gap: '8px' }}>
+                      <button
+                        className="btn lime"
+                        style={{ flex: 1, padding: '10px' }}
+                        onClick={() => { setActiveHeroCarton(carton); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
+                      >
+                        Feature in Hero ↗
+                      </button>
+                      <button
+                        className="btn dark"
+                        style={{ padding: '10px 14px' }}
+                        onClick={() => scrollToContact(carton.name)}
+                      >
+                        Sponsor This Drop
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
           {/* 02 / The Vibes & Editions */}
           <section id="editions" className="editions">
             <div className="wrap">
@@ -220,28 +323,34 @@ export default function App() {
               <div className="edition-grid">
                 <article className="edition her reveal visible">
                   <div>
-                    <div className="edition-num">EDITION 001 / HER</div>
-                    <h3>MAIN<br />CHARACTER<br />ENERGY.</h3>
-                    <p>Big mood. Bigger hydration. A little extra, always.</p>
-                    <div className="mini-pack">PAANI<br />POP!</div>
+                    <div className="edition-num">EDITION 001 / SOULAMORE VIBE</div>
+                    <h3>GENTLE &<br />MINDFUL<br />HYDRATION.</h3>
+                    <p>Therapy circles, soft peach gables, and open dialogue.</p>
+                    <div style={{ marginTop: '20px' }}>
+                      <InteractiveCarton3D carton={SPONSOR_CARTONS[1]} scale={0.34} autoSpin={true} />
+                    </div>
                   </div>
                   <div className="foot"><span>For the plot.</span><b>♡</b></div>
                 </article>
                 <article className="edition him reveal visible">
                   <div>
-                    <div className="edition-num">EDITION 002 / HIM</div>
-                    <h3>LOW KEY.<br />HIGH<br />HYDRATION.</h3>
-                    <p>Chill design. Dry humour. Not here to impress your ex.</p>
-                    <div className="mini-pack" style={{ background: 'var(--lime)' }}>PAANI<br />POP!</div>
+                    <div className="edition-num">EDITION 002 / INFLUENCEOS & BUILDER</div>
+                    <h3>CREATORS.<br />ESCRW.<br />METRICS.</h3>
+                    <p>Electric violet packaging. Escrow paid per view.</p>
+                    <div style={{ marginTop: '20px' }}>
+                      <InteractiveCarton3D carton={SPONSOR_CARTONS[2]} scale={0.34} autoSpin={true} />
+                    </div>
                   </div>
-                  <div className="foot"><span>Stay hydrated, bro.</span><b>✳</b></div>
+                  <div className="foot"><span>Stay sharp, bro.</span><b>✳</b></div>
                 </article>
                 <article className="edition all reveal visible">
                   <div>
-                    <div className="edition-num">EDITION 003 / EVERYONE</div>
-                    <h3>NO LABELS.<br />JUST<br />GOOD WATER.</h3>
-                    <p>Random questions, weird facts and universally good energy.</p>
-                    <div className="mini-pack" style={{ background: 'var(--pink)' }}>PAANI<br />POP!</div>
+                    <div className="edition-num">EDITION 003 / HASHLILLY FLAGSHIP</div>
+                    <h3>NO MIDDLEMEN.<br />OWN YOUR<br />AUDIENCE.</h3>
+                    <p>Cosmic dark purple radial packaging with custom QR.</p>
+                    <div style={{ marginTop: '20px' }}>
+                      <InteractiveCarton3D carton={SPONSOR_CARTONS[0]} scale={0.34} autoSpin={true} />
+                    </div>
                   </div>
                   <div className="foot"><span>Choose your own vibe.</span><b>☺</b></div>
                 </article>
@@ -730,35 +839,65 @@ export default function App() {
                     </div>
                   )}
 
+                  {/* Creative Studio with Real 3D Carton Viewer & Print Dielines */}
                   {brandPage === 'creative' && (
                     <div>
                       <div className="mainhead">
-                        <div><h2>Creative studio 🎨</h2><p>Make the carton the campaign. Keep the water part honest.</p></div>
+                        <div><h2>Creative studio 🎨</h2><p>Live 3D proof visualizer and packaging dielines.</p></div>
                         <span className="status orange">1 APPROVAL NEEDED</span>
                       </div>
+                      
+                      <div style={{ display: 'flex', gap: '8px', marginBottom: '14px', flexWrap: 'wrap' }}>
+                        {SPONSOR_CARTONS.map(c => (
+                          <button
+                            key={c.id}
+                            className={`btn ${creativeCarton.id === c.id ? 'lime' : ''}`}
+                            style={{ padding: '7px 13px', fontSize: '11px', background: creativeCarton.id === c.id ? 'var(--lime)' : '#fff' }}
+                            onClick={() => setCreativeCarton(c)}
+                          >
+                            {c.name}
+                          </button>
+                        ))}
+                      </div>
+
                       <div className="twocol">
                         <section className="panel">
-                          <div className="panelhead"><h3>Artwork proof · Campus Reset</h3><span className="tag">V03</span></div>
-                          <div style={{ background: '#f0eee5', border: '1px dashed #aaa', padding: '25px', display: 'grid', placeItems: 'center', minHeight: '290px' }}>
-                            <div style={{ width: '155px', height: '225px', background: 'var(--lime)', border: '2px solid var(--ink)', borderRadius: '15px 15px 22px 22px', transform: 'rotate(-3deg)', padding: '15px', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', boxShadow: '7px 7px 0 var(--ink)' }}>
-                              <div className="mono" style={{ color: 'var(--ink)' }}>PAANI POP / 500 ML</div>
-                              <div style={{ font: "900 27px/0.9 'Space Grotesk'", letterSpacing: '-2px' }}>CAMPUS<br />RESET<span style={{ color: 'var(--blue)' }}>!</span></div>
-                              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'end' }}>
-                                <span className="mono" style={{ color: 'var(--ink)' }}>TAKE A<br />BREATHER.</span>
-                                <div style={{ width: '38px', height: '38px', background: 'white', border: '1px solid black', display: 'grid', placeItems: 'center', fontSize: '25px' }}>▦</div>
-                              </div>
-                            </div>
+                          <div className="panelhead">
+                            <h3>3D Carton Proof · {creativeCarton.name}</h3>
+                            <a
+                              href={`/cartons/carton-${creativeCarton.id}.html`}
+                              target="_blank"
+                              rel="noreferrer"
+                              style={{ font: "700 11px 'DM Sans'", color: 'var(--blue)' }}
+                            >
+                              Open Full Flat Wrap ↗
+                            </a>
                           </div>
+                          
+                          <div style={{ background: '#f0eee5', border: '1.5px dashed var(--ink)', padding: '16px', borderRadius: '16px' }}>
+                            <InteractiveCarton3D carton={creativeCarton} scale={0.46} autoSpin={true} />
+                          </div>
+
                           <div className="actions" style={{ marginTop: '14px' }}>
                             <button className="btn lime" onClick={() => showToast('Proof approved and released to production.')}>✓ Approve proof</button>
                             <button className="btn" onClick={() => showToast('Feedback transmitted to design team.')}>Request changes</button>
+                            <a
+                              href="/cartons/paanipop-sponsor-cartons.html"
+                              target="_blank"
+                              rel="noreferrer"
+                              className="btn"
+                              style={{ textDecoration: 'none', background: '#fff' }}
+                            >
+                              🖨️ Export PDF Dieline ↗
+                            </a>
                           </div>
                         </section>
+
                         <section className="panel">
                           <h3 style={{ font: "700 15px 'Space Grotesk'" }}>Proof checklist</h3>
                           <div className="todo"><span className="dot" style={{ background: 'var(--lime)' }}></span><div>Brand logo and colours match supplied assets</div></div>
                           <div className="todo"><span className="dot" style={{ background: 'var(--lime)' }}></span><div>QR code opens the correct campaign page</div></div>
-                          <div className="todo"><span className="dot"></span><div>Mandatory product and label information verified</div></div>
+                          <div className="todo"><span className="dot" style={{ background: 'var(--lime)' }}></span><div>Mandatory product and label information verified</div></div>
                           <div className="todo"><span className="dot" style={{ background: 'var(--lime)' }}></span><div>Artwork dimensions match supplier dieline</div></div>
                           <p className="mini" style={{ marginTop: '18px' }}>Final release remains subject to PAANI POP compliance approval and manufacturer specifications.</p>
                         </section>
@@ -1118,9 +1257,18 @@ export default function App() {
             <a className="logo" href="#top">PAANI<span className="logo-mark">✳</span>POP</a>
             <div className="footer-links">
               <a href="#why" onClick={() => setActiveTab('site')}>The idea</a>
+              <a href="#cartons-showcase" onClick={() => setActiveTab('site')}>3D cartons</a>
               <a href="#editions" onClick={() => setActiveTab('site')}>The vibes</a>
               <a href="#brands" onClick={() => setActiveTab('site')}>For brands</a>
               <a href="#contact" onClick={() => setActiveTab('site')}>Contact</a>
+              <a
+                href="/cartons/paanipop-sponsor-cartons.html"
+                target="_blank"
+                rel="noreferrer"
+                style={{ color: '#fff', textDecoration: 'none' }}
+              >
+                Print dielines ↗
+              </a>
               <button
                 style={{ background: 'transparent', border: 'none', color: '#fff', cursor: 'pointer', font: 'inherit', padding: 0 }}
                 onClick={() => { setActiveTab('portal'); setPortalMode('brand'); }}
